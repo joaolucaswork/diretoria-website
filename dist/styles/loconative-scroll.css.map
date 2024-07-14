@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/styles/loconative-scroll.css"],
+  "sourcesContent": ["/*! loconative-scroll v1.0.2 | MIT License | https://github.com/quentinhocde/loconative-scroll */\nhtml {\n  scroll-behavior: initial;\n}\nhtml.has-scroll-dragging {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\nhtml,\nbody {\n  width: 100%;\n  min-height: 100%;\n}\n\nbody {\n  opacity: 0;\n}\n.has-scroll-init body {\n  opacity: 1;\n}\n\n[data-scroll-direction='vertical'] [data-scroll-wrapper] {\n  height: 100vh;\n  overflow-x: hidden;\n  overflow-y: scroll;\n}\n\n[data-scroll-direction='horizontal'] [data-scroll-wrapper] {\n  width: 100vw;\n  height: 100vh;\n  overflow-x: scroll;\n}\n\n.has-scroll-smooth [data-scroll-container] {\n  min-height: 100vh;\n}\n\n[data-scroll-direction='horizontal'] [data-scroll-container] {\n  height: 100%;\n  display: inline-flex;\n  min-width: var(--scrollContainerWidth);\n}\n\n[data-scroll-direction='horizontal'] [data-scroll-section] {\n  flex-shrink: 0;\n  height: 100vh;\n}\n"],
+  "mappings": ";AACA;AACE,mBAAiB;AACnB;AACA,IAAI,CAAC;AACH,uBAAqB;AACrB,oBAAkB;AAClB,mBAAiB;AACjB,eAAa;AACf;AAEA;AACA;AACE,SAAO;AACP,cAAY;AACd;AAEA;AACE,WAAS;AACX;AACA,CAAC,gBAAgB;AACf,WAAS;AACX;AAEA,CAAC,gCAAkC,CAAC;AAClC,UAAQ;AACR,cAAY;AACZ,cAAY;AACd;AAEA,CAAC,kCAAoC,CAAC;AACpC,SAAO;AACP,UAAQ;AACR,cAAY;AACd;AAEA,CAAC,kBAAkB,CAAC;AAClB,cAAY;AACd;AAEA,CAAC,kCAAoC,CAAC;AACpC,UAAQ;AACR,WAAS;AACT,aAAW,IAAI;AACjB;AAEA,CAAC,kCAAoC,CAAC;AACpC,eAAa;AACb,UAAQ;AACV;",
+  "names": []
+}

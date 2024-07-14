@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/styles/locomotive-scroll.css"],
+  "sourcesContent": ["html.lenis {\n  height: auto;\n}\n.lenis.lenis-smooth {\n  scroll-behavior: auto;\n}\n.lenis.lenis-smooth [data-lenis-prevent] {\n  overscroll-behavior: contain;\n}\n.lenis.lenis-stopped {\n  overflow: hidden;\n}\n.lenis.lenis-scrolling iframe {\n  pointer-events: none;\n}\n"],
+  "mappings": ";AAAA,IAAI,CAAC;AACH,UAAQ;AACV;AACA,CAHK,KAGC,CAAC;AACL,mBAAiB;AACnB;AACA,CANK,KAMC,CAHC,aAGa,CAAC;AACnB,uBAAqB;AACvB;AACA,CATK,KASC,CAAC;AACL,YAAU;AACZ;AACA,CAZK,KAYC,CAAC,gBAAgB;AACrB,kBAAgB;AAClB;",
+  "names": []
+}

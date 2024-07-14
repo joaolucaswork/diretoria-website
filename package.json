@@ -1,8 +1,8 @@
 {
-  "name": "@finsweet/developer-starter",
-  "version": "0.0.0",
-  "description": "Developer starter template for Finsweet projects.",
-  "homepage": "https://github.com/finsweet/developer-starter#readme",
+  "name": "@diretoria_mediahouse/site",
+  "version": "0.0.1",
+  "description": "repository for the Diretoria Mediahouse website",
+  "homepage": "https://github.com/joaolucaswork/diretoria-website",
   "license": "ISC",
   "keywords": [],
   "author": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/finsweet/developer-starter.git"
+    "url": "git+https://github.com/joaolucaswork/diretoria-website.git"
   },
   "bugs": {
     "url": "https://github.com/finsweet/developer-starter/issues"
