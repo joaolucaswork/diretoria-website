@@ -1,13 +1,13 @@
 {
   "name": "@diretoria_mediahouse/site",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "repository for the Diretoria Mediahouse website",
   "homepage": "https://github.com/joaolucaswork/diretoria-website",
   "license": "ISC",
   "keywords": [],
   "author": {
-    "name": "Finsweet",
-    "url": "https://finsweet.com/"
+    "name": "Joao Lucas",
+    "url": "https://jlucas.work/"
   },
   "repository": {
     "type": "git",
