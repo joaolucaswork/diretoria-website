@@ -1,14 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { gsap } from 'gsap';
-import { CustomEase } from 'gsap/CustomEase';
-import { Flip } from 'gsap/Flip';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import sticksy from 'sticksy';
 import Typed from 'typed.js';
-
-gsap.registerPlugin(Flip, ScrollTrigger, CustomEase);
 
 export const pageEffects = () => {
   // Configuração do Typed.js

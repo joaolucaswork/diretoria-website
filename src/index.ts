@@ -8,6 +8,7 @@ import '../node_modules/locomotive-scroll/dist/locomotive-scroll.css';
 //Smooth Scroll Plugin
 import LocomotiveScroll from 'locomotive-scroll';
 
+import { cursoModules } from '$utils/curso-modules';
 //TS Files
 import { pageEffects } from '$utils/page-effects';
 import { videoManager } from '$utils/video-manager';
@@ -27,3 +28,4 @@ const locomotiveScroll = new LocomotiveScroll({
 //TS Files
 pageEffects();
 videoManager();
+cursoModules();
