@@ -6,6 +6,11 @@ on:
       - master
       - main
 
+      - name: Debug
+  run: |
+    ls -la
+    cat package.json
+
 jobs:
   release:
     uses: finsweet/workflow-release/.github/workflows/release.yml@main
