@@ -10,7 +10,6 @@ import LocomotiveScroll from 'locomotive-scroll';
 
 //TS Files
 import { pageEffects } from '$utils/page-effects';
-import { textAnimation } from '$utils/text-animation';
 import { videoManager } from '$utils/video-manager';
 
 // Locomotive Scroll Instance
@@ -26,6 +25,5 @@ const locomotiveScroll = new LocomotiveScroll({
 // Add event listener to the div to play the video
 
 //TS Files
-textAnimation();
 pageEffects();
 videoManager();

@@ -3,9 +3,9 @@
 import Plyr from 'plyr';
 
 export const videoManager = () => {
-  let player = null; // Declare player variable
+  let player = null;
 
-  // Function to initialize Plyr
+  // Função para inicializar Plyr
   const initializePlyr = () => {
     player = new Plyr('#player', {
       controls: [],
@@ -16,13 +16,36 @@ export const videoManager = () => {
 
     // Slider de volume
     const volumeSlider = document.querySelector('.volume-slider');
-    volumeSlider.addEventListener('input', function () {
-      player.volume = parseFloat(this.value);
+    const volumeIcons = document.querySelector('.icon-change');
+
+    const updateVolumeIcons = () => {
+      const soundEnable = document.querySelector('.sound_enable');
+      const soundMute = document.querySelector('.sound_mute');
+      const { volume } = player;
+      const isMuted = player.muted;
+
+      if (isMuted || volume === 0) {
+        soundEnable.style.display = 'none';
+        soundMute.style.display = 'flex';
+        volumeIcons.style.opacity = '0.5';
+      } else {
+        soundEnable.style.display = 'flex';
+        soundMute.style.display = 'none';
+        volumeIcons.style.opacity = '1';
+      }
+    };
+
+    volumeSlider.addEventListener('input', () => {
+      const volume = parseFloat(volumeSlider.value);
+      player.volume = volume;
+      player.muted = volume === 0;
+      updateVolumeIcons();
     });
 
     // Atualiza a posição do slider de volume com base no volume do Plyr
     player.on('volumechange', () => {
-      volumeSlider.value = player.volume;
+      volumeSlider.value = player.muted ? 0 : player.volume;
+      updateVolumeIcons();
     });
 
     // Atualiza a interface do usuário com base no estado de reprodução
@@ -37,7 +60,6 @@ export const videoManager = () => {
         ['.custom-play-min', 'hide', !isPlaying],
         ['.controls', 'playing'],
       ];
-
       elementsToToggle.forEach(([selector, className, condition = isPlaying]) => {
         document
           .querySelectorAll(selector)
@@ -47,10 +69,10 @@ export const videoManager = () => {
 
     // Alterna reprodução/pausa e atualiza a interface visual
     document.querySelectorAll('.play-video.full').forEach((trigger) => {
-      trigger.addEventListener('click', function () {
+      trigger.addEventListener('click', () => {
         player.togglePlay();
         updateUIOnPlayState(player.playing);
-        this.classList.toggle('hide_video_play', player.playing);
+        trigger.classList.toggle('hide_video_play', player.playing);
       });
     });
 
@@ -61,34 +83,26 @@ export const videoManager = () => {
     // Função para alternar o som do Plyr e a visibilidade dos ícones
     const toggleMute = () => {
       player.muted = !player.muted;
-      document.querySelector('.sound_enable').style.display = player.muted ? 'none' : 'block';
-      document.querySelector('.sound_mute').style.display = player.muted ? 'block' : 'none';
+      if (!player.muted && player.volume === 0) {
+        player.volume = 0.5; // Define um volume padrão se estiver em 0
+      }
+      updateVolumeIcons();
     };
 
-    // Exemplo de uso
-    document.querySelector('.icon-change').addEventListener('click', toggleMute);
+    // Adiciona evento para alternar o som
+    volumeIcons.addEventListener('click', toggleMute);
 
-    // Define o estado inicial dos ícones
-    toggleMute();
-
-    // Função para atualizar os ícones de reprodução com base no estado de reprodução do Plyr
+    // Atualiza ícones de reprodução com base no estado de reprodução do Plyr
     const updatePlayIcons = () => {
-      const playIcon = document.querySelector('.play_state');
+      const playIcon = document.querySelector('.play_min_control');
       const pauseIcon = document.querySelector('.pause_state');
       const minIcon = document.querySelector('.minimizar');
       const maxIcon = document.querySelector('.maximizar');
-
-      if (player.playing) {
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'block';
-        minIcon.style.display = 'none';
-        maxIcon.style.display = 'block';
-      } else {
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
-        maxIcon.style.display = 'none';
-        minIcon.style.display = 'block';
-      }
+      const isPlaying = player.playing;
+      playIcon.style.display = isPlaying ? 'none' : 'flex';
+      pauseIcon.style.display = isPlaying ? 'flex' : 'none';
+      minIcon.style.display = isPlaying ? 'none' : 'block';
+      maxIcon.style.display = isPlaying ? 'block' : 'none';
     };
 
     // Adiciona eventos ao Plyr para quando o estado de reprodução muda
@@ -96,9 +110,13 @@ export const videoManager = () => {
     player.on('pause', updatePlayIcons);
 
     // Define o estado inicial dos ícones quando o documento é carregado
-    document.addEventListener('DOMContentLoaded', updatePlayIcons);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.play_min_control').style.display = 'none';
+      updatePlayIcons();
+      updateVolumeIcons();
+    });
   };
 
-  // Initialize Plyr on page load
+  // Inicializa o Plyr ao carregar a página
   document.addEventListener('DOMContentLoaded', initializePlyr);
 };
