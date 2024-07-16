@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@changesets/changelog-git": "^0.2.0",
-    "@changesets/cli": "^2.27.5",
+    "@changesets/cli": "^2.27.7",
     "@finsweet/eslint-config": "^2.0.7",
     "@finsweet/tsconfig": "^1.3.4",
     "@playwright/test": "^1.44.1",
