@@ -36,7 +36,7 @@ export const cursoModules = () => {
         gsap.to(star, {
           fill: '#ffe100',
           rotation: 15,
-          duration: 0.5,
+          duration: 0.3,
           delay: index * 0.2,
           ease: 'power1.inOut',
           onComplete: () => {
@@ -63,4 +63,36 @@ export const cursoModules = () => {
   }
 
   document.addEventListener('DOMContentLoaded', animateStarColors);
+
+  const playButton = document.querySelector('.play-video.full');
+  const circle = playButton.querySelector('circle');
+  const triangle = document.getElementById('triangle');
+
+  // Set up initial states
+  gsap.set(triangle, { scale: 0, opacity: 0, display: 'block' });
+
+  // Create the hover animation
+  const hoverAnimation = gsap
+    .timeline({ paused: true })
+    .to(circle, { scale: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut' })
+    .to(triangle, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.inOut' }, '-=0.3');
+
+  // Add event listeners
+  playButton.addEventListener('mouseenter', () => hoverAnimation.play());
+  playButton.addEventListener('mouseleave', () => hoverAnimation.reverse());
+
+  $(document).ready(function () {
+    $('.lucas_jpg').hover(
+      function () {
+        $('.brand_text').addClass('active');
+        $(this).addClass('disabled');
+        $('.image.is-2').addClass('active');
+      },
+      function () {
+        $('.brand_text').removeClass('active');
+        $(this).removeClass('disabled');
+        $('.image.is-2').removeClass('active');
+      }
+    );
+  });
 };
