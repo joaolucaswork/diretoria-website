@@ -2,9 +2,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import './styles/index.css';
-import '../node_modules/plyr/dist/plyr.css';
-import '../node_modules/locomotive-scroll/dist/locomotive-scroll.css';
+import './styles/index.scss';
+import 'plyr/dist/plyr.css';
+import 'locomotive-scroll/locomotive-scroll.css';
 
 //Smooth Scroll Plugin
 import LocomotiveScroll from 'locomotive-scroll';

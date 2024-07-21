@@ -5,7 +5,8 @@
     "baseUrl": "./",
     "paths": {
       "$utils/*": ["src/utils/*"],
-      "$home/*": ["src/home-page/*"]
+      "$home/*": ["src/home-page/*"],
+      "$text/*": ["src/site-text/*"]
     },
     "types": ["@finsweet/ts-utils"]
   }

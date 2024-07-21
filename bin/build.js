@@ -1,18 +1,38 @@
 import * as esbuild from 'esbuild';
 import { readdirSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join, sep } from 'path';
+import * as sass from 'sass';
 
 // Config output
 const BUILD_DIRECTORY = 'dist';
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
 // Config entrypoint files
-const ENTRY_POINTS = ['src/index.ts', 'src/home-page/index.ts'];
+const ENTRY_POINTS = ['src/index.ts', 'src/home-page/index.ts', 'src/site-text/index.ts'];
 
 // Config dev serving
 const LIVE_RELOAD = !PRODUCTION;
 const SERVE_PORT = 3000;
 const SERVE_ORIGIN = `http://localhost:${SERVE_PORT}`;
+
+// SCSS plugin
+const scssPlugin = {
+  name: 'scss',
+  setup(build) {
+    build.onLoad({ filter: /\.scss$/ }, async (args) => {
+      const sassResult = sass.renderSync({
+        file: args.path,
+        outputStyle: 'compressed',
+      });
+
+      return {
+        contents: sassResult.css.toString(),
+        loader: 'css',
+      };
+    });
+  },
+};
 
 // Create context
 const context = await esbuild.context({
@@ -25,6 +45,10 @@ const context = await esbuild.context({
   inject: LIVE_RELOAD ? ['./bin/live-reload.js'] : undefined,
   define: {
     SERVE_ORIGIN: JSON.stringify(SERVE_ORIGIN),
+  },
+  plugins: [scssPlugin],
+  loader: {
+    '.scss': 'css',
   },
 });
 
