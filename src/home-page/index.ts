@@ -1,23 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+import 'plyr/dist/plyr.css';
+import '../styles/index.scss';
 
-import './style/index.scss';
-import 'locomotive-scroll/locomotive-scroll.css';
+import { gsap } from 'gsap';
+import { CustomEase } from 'gsap/CustomEase';
+import { Flip } from 'gsap/Flip';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-//Smooth Scroll Plugin
-import LocomotiveScroll from 'locomotive-scroll';
+import { initializeGlobal } from './globalCode';
+import { initializeHoverStaggerEffect } from './hoverStaggerEffect';
+import { initializeIntersectionObservers } from './intersectionObservers';
+import { initializeMarqueeAnimation } from './marqueeAnimation';
+import { initializeScrollFlipAnimation } from './scrollFlipAnimation';
+import { initializeTextSplitting } from './textSplitting';
+import { initializeVideoPlayer } from './videoPlayer';
+import { initializeVideoTransitionAnimation } from './videoTransitionAnimation';
 
-import { siteEffects } from './utils/site-effect';
+gsap.registerPlugin(Flip, ScrollTrigger, CustomEase);
 
-// Locomotive Scroll Instance
-const locomotiveScroll = new LocomotiveScroll({
-  lenisOptions: {
-    lerp: 0.1,
-    duration: 0.7,
-    wheelMultiplier: 1.5,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-  },
-});
-
-siteEffects();
+initializeVideoPlayer();
+initializeMarqueeAnimation();
+initializeTextSplitting();
+initializeHoverStaggerEffect();
+initializeIntersectionObservers();
+initializeScrollFlipAnimation();
+initializeVideoTransitionAnimation();
+initializeGlobal();

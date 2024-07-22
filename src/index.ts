@@ -3,8 +3,6 @@
 // @ts-nocheck
 
 import './styles/index.scss';
-import 'plyr/dist/plyr.css';
-import 'locomotive-scroll/locomotive-scroll.css';
 
 //Smooth Scroll Plugin
 import LocomotiveScroll from 'locomotive-scroll';

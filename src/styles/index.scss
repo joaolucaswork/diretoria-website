@@ -1,3 +1,33 @@
+@import 'plyr/dist/plyr.css';
+@import 'locomotive-scroll/locomotive-scroll.css';
+@import 'mouse-follower/dist/mouse-follower.min.css';
+
 .plyr__controls {
   z-index: 9999999 !important; /* Defina o valor de z-index conforme necessário */
+}
+
+body {
+}
+.plyr__poster {
+  background-size: cover !important;
+}
+video {
+  object-fit: cover;
+}
+
+body.scrollflip-relative [tr-scrollflip-sticky='true'] {
+  position: relative;
+}
+
+.mf-cursor-text {
+  font-weight: 600;
+  color: white;
+}
+
+.mf-cursor.-text:before {
+  opacity: 1;
+}
+.mf-cursor:before {
+  background: black;
+  transform: scale(0.4);
 }
