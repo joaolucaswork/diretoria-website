@@ -6,6 +6,7 @@ import { CustomEase } from 'gsap/CustomEase';
 import { Flip } from 'gsap/Flip';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { initializedragEffect } from './dragCode';
 import { initializeGlobal } from './globalCode';
 import { initializeHoverStaggerEffect } from './hoverStaggerEffect';
 import { initializeIntersectionObservers } from './intersectionObservers';
@@ -27,3 +28,4 @@ initializeScrollFlipAnimation();
 initializeVideoTransitionAnimation();
 initializeGlobal();
 initializeScrollEffect();
+initializedragEffect();

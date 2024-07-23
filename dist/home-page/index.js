@@ -37,6 +37,682 @@
     }
   });
 
+  // node_modules/.pnpm/dragdealer@0.10.0/node_modules/dragdealer/src/dragdealer.js
+  var require_dragdealer = __commonJS({
+    "node_modules/.pnpm/dragdealer@0.10.0/node_modules/dragdealer/src/dragdealer.js"(exports, module) {
+      init_live_reload();
+      (function(root, factory) {
+        if (typeof define === "function" && define.amd) {
+          define(factory);
+        } else if (typeof module === "object" && module.exports) {
+          module.exports.Dragdealer = factory();
+        } else {
+          root.Dragdealer = factory();
+        }
+      })(exports, function() {
+        var Dragdealer2 = function(wrapper, options) {
+          this.options = this.applyDefaults(options || {});
+          this.bindMethods();
+          this.wrapper = this.getWrapperElement(wrapper);
+          if (!this.wrapper) {
+            return;
+          }
+          this.handle = this.getHandleElement(this.wrapper, this.options.handleClass);
+          if (!this.handle) {
+            return;
+          }
+          this.init();
+          this.bindEventListeners();
+        };
+        Dragdealer2.prototype = {
+          defaults: {
+            disabled: false,
+            horizontal: true,
+            vertical: false,
+            slide: true,
+            steps: 0,
+            snap: false,
+            loose: false,
+            speed: 0.1,
+            xPrecision: 0,
+            yPrecision: 0,
+            handleClass: "handle",
+            css3: true,
+            activeClass: "active",
+            tapping: true
+          },
+          init: function() {
+            if (this.options.css3) {
+              triggerWebkitHardwareAcceleration(this.handle);
+            }
+            this.value = {
+              prev: [-1, -1],
+              current: [this.options.x || 0, this.options.y || 0],
+              target: [this.options.x || 0, this.options.y || 0]
+            };
+            this.offset = {
+              wrapper: [0, 0],
+              mouse: [0, 0],
+              prev: [-999999, -999999],
+              current: [0, 0],
+              target: [0, 0]
+            };
+            this.dragStartPosition = { x: 0, y: 0 };
+            this.change = [0, 0];
+            this.stepRatios = this.calculateStepRatios();
+            this.activity = false;
+            this.dragging = false;
+            this.tapping = false;
+            this.reflow();
+            if (this.options.disabled) {
+              this.disable();
+            }
+          },
+          applyDefaults: function(options) {
+            for (var k in this.defaults) {
+              if (!options.hasOwnProperty(k)) {
+                options[k] = this.defaults[k];
+              }
+            }
+            return options;
+          },
+          getWrapperElement: function(wrapper) {
+            if (typeof wrapper == "string") {
+              return document.getElementById(wrapper);
+            } else {
+              return wrapper;
+            }
+          },
+          getHandleElement: function(wrapper, handleClass) {
+            var childElements, handleClassMatcher, i2;
+            if (wrapper.getElementsByClassName) {
+              childElements = wrapper.getElementsByClassName(handleClass);
+              if (childElements.length > 0) {
+                return childElements[0];
+              }
+            } else {
+              handleClassMatcher = new RegExp("(^|\\s)" + handleClass + "(\\s|$)");
+              childElements = wrapper.getElementsByTagName("*");
+              for (i2 = 0; i2 < childElements.length; i2++) {
+                if (handleClassMatcher.test(childElements[i2].className)) {
+                  return childElements[i2];
+                }
+              }
+            }
+          },
+          calculateStepRatios: function() {
+            var stepRatios = [];
+            if (this.options.steps >= 1) {
+              for (var i2 = 0; i2 <= this.options.steps - 1; i2++) {
+                if (this.options.steps > 1) {
+                  stepRatios[i2] = i2 / (this.options.steps - 1);
+                } else {
+                  stepRatios[i2] = 0;
+                }
+              }
+            }
+            return stepRatios;
+          },
+          setWrapperOffset: function() {
+            this.offset.wrapper = Position.get(this.wrapper);
+          },
+          calculateBounds: function() {
+            var bounds = {
+              top: this.options.top || 0,
+              bottom: -(this.options.bottom || 0) + this.wrapper.offsetHeight,
+              left: this.options.left || 0,
+              right: -(this.options.right || 0) + this.wrapper.offsetWidth
+            };
+            bounds.availWidth = bounds.right - bounds.left - this.handle.offsetWidth;
+            bounds.availHeight = bounds.bottom - bounds.top - this.handle.offsetHeight;
+            return bounds;
+          },
+          calculateValuePrecision: function() {
+            var xPrecision = this.options.xPrecision || Math.abs(this.bounds.availWidth), yPrecision = this.options.yPrecision || Math.abs(this.bounds.availHeight);
+            return [
+              xPrecision ? 1 / xPrecision : 0,
+              yPrecision ? 1 / yPrecision : 0
+            ];
+          },
+          bindMethods: function() {
+            if (typeof this.options.customRequestAnimationFrame === "function") {
+              this.requestAnimationFrame = bind(this.options.customRequestAnimationFrame, window);
+            } else {
+              this.requestAnimationFrame = bind(requestAnimationFrame2, window);
+            }
+            if (typeof this.options.customCancelAnimationFrame === "function") {
+              this.cancelAnimationFrame = bind(this.options.customCancelAnimationFrame, window);
+            } else {
+              this.cancelAnimationFrame = bind(cancelAnimationFrame2, window);
+            }
+            this.animateWithRequestAnimationFrame = bind(this.animateWithRequestAnimationFrame, this);
+            this.animate = bind(this.animate, this);
+            this.onHandleMouseDown = bind(this.onHandleMouseDown, this);
+            this.onHandleTouchStart = bind(this.onHandleTouchStart, this);
+            this.onDocumentMouseMove = bind(this.onDocumentMouseMove, this);
+            this.onWrapperTouchMove = bind(this.onWrapperTouchMove, this);
+            this.onWrapperMouseDown = bind(this.onWrapperMouseDown, this);
+            this.onWrapperTouchStart = bind(this.onWrapperTouchStart, this);
+            this.onDocumentMouseUp = bind(this.onDocumentMouseUp, this);
+            this.onDocumentTouchEnd = bind(this.onDocumentTouchEnd, this);
+            this.onHandleClick = bind(this.onHandleClick, this);
+            this.onWindowResize = bind(this.onWindowResize, this);
+          },
+          bindEventListeners: function() {
+            addEventListener2(this.handle, "mousedown", this.onHandleMouseDown);
+            addEventListener2(this.handle, "touchstart", this.onHandleTouchStart);
+            addEventListener2(document, "mousemove", this.onDocumentMouseMove);
+            addEventListener2(this.wrapper, "touchmove", this.onWrapperTouchMove);
+            addEventListener2(this.wrapper, "mousedown", this.onWrapperMouseDown);
+            addEventListener2(this.wrapper, "touchstart", this.onWrapperTouchStart);
+            addEventListener2(document, "mouseup", this.onDocumentMouseUp);
+            addEventListener2(document, "touchend", this.onDocumentTouchEnd);
+            addEventListener2(this.handle, "click", this.onHandleClick);
+            addEventListener2(window, "resize", this.onWindowResize);
+            this.animate(false, true);
+            this.interval = this.requestAnimationFrame(this.animateWithRequestAnimationFrame);
+          },
+          unbindEventListeners: function() {
+            removeEventListener2(this.handle, "mousedown", this.onHandleMouseDown);
+            removeEventListener2(this.handle, "touchstart", this.onHandleTouchStart);
+            removeEventListener2(document, "mousemove", this.onDocumentMouseMove);
+            removeEventListener2(this.wrapper, "touchmove", this.onWrapperTouchMove);
+            removeEventListener2(this.wrapper, "mousedown", this.onWrapperMouseDown);
+            removeEventListener2(this.wrapper, "touchstart", this.onWrapperTouchStart);
+            removeEventListener2(document, "mouseup", this.onDocumentMouseUp);
+            removeEventListener2(document, "touchend", this.onDocumentTouchEnd);
+            removeEventListener2(this.handle, "click", this.onHandleClick);
+            removeEventListener2(window, "resize", this.onWindowResize);
+            this.cancelAnimationFrame(this.interval);
+          },
+          onHandleMouseDown: function(e3) {
+            Cursor.refresh(e3);
+            preventEventDefaults(e3);
+            stopEventPropagation(e3);
+            this.activity = false;
+            this.startDrag();
+          },
+          onHandleTouchStart: function(e3) {
+            Cursor.refresh(e3);
+            stopEventPropagation(e3);
+            this.activity = false;
+            this.startDrag();
+          },
+          onDocumentMouseMove: function(e3) {
+            if (e3.clientX - this.dragStartPosition.x === 0 && e3.clientY - this.dragStartPosition.y === 0) {
+              return;
+            }
+            Cursor.refresh(e3);
+            if (this.dragging) {
+              this.activity = true;
+              preventEventDefaults(e3);
+            }
+          },
+          onWrapperTouchMove: function(e3) {
+            Cursor.refresh(e3);
+            if (!this.activity && this.draggingOnDisabledAxis()) {
+              if (this.dragging) {
+                this.stopDrag();
+              }
+              return;
+            }
+            preventEventDefaults(e3);
+            this.activity = true;
+          },
+          onWrapperMouseDown: function(e3) {
+            Cursor.refresh(e3);
+            preventEventDefaults(e3);
+            this.startTap();
+          },
+          onWrapperTouchStart: function(e3) {
+            Cursor.refresh(e3);
+            preventEventDefaults(e3);
+            this.startTap();
+          },
+          onDocumentMouseUp: function(e3) {
+            this.stopDrag();
+            this.stopTap();
+          },
+          onDocumentTouchEnd: function(e3) {
+            this.stopDrag();
+            this.stopTap();
+          },
+          onHandleClick: function(e3) {
+            if (this.activity) {
+              preventEventDefaults(e3);
+              stopEventPropagation(e3);
+            }
+          },
+          onWindowResize: function(e3) {
+            this.reflow();
+          },
+          enable: function() {
+            this.disabled = false;
+            this.handle.className = this.handle.className.replace(/\s?disabled/g, "");
+          },
+          disable: function() {
+            this.disabled = true;
+            this.handle.className += " disabled";
+          },
+          reflow: function() {
+            this.setWrapperOffset();
+            this.bounds = this.calculateBounds();
+            this.valuePrecision = this.calculateValuePrecision();
+            this.updateOffsetFromValue();
+          },
+          getStep: function() {
+            return [
+              this.getStepNumber(this.value.target[0]),
+              this.getStepNumber(this.value.target[1])
+            ];
+          },
+          getStepWidth: function() {
+            return Math.abs(this.bounds.availWidth / this.options.steps);
+          },
+          getValue: function() {
+            return this.value.target;
+          },
+          setStep: function(x2, y, snap3) {
+            this.setValue(
+              this.options.steps && x2 > 1 ? (x2 - 1) / (this.options.steps - 1) : 0,
+              this.options.steps && y > 1 ? (y - 1) / (this.options.steps - 1) : 0,
+              snap3
+            );
+          },
+          setValue: function(x2, y, snap3) {
+            this.setTargetValue([x2, y || 0]);
+            if (snap3) {
+              this.groupCopy(this.value.current, this.value.target);
+              this.updateOffsetFromValue();
+              this.callAnimationCallback();
+            }
+          },
+          startTap: function() {
+            if (this.disabled || !this.options.tapping) {
+              return;
+            }
+            this.tapping = true;
+            this.setWrapperOffset();
+            if (this.options.snap && this.options.steps) {
+              var cursorXRatio = (Cursor.x - this.offset.wrapper[0]) / this.bounds.availWidth;
+              var cursorYRatio = (Cursor.y - this.offset.wrapper[1]) / this.bounds.availHeight;
+              this.setValue(this.getClosestStep(cursorXRatio), this.getClosestStep(cursorYRatio), true);
+            } else {
+              this.setTargetValueByOffset([
+                Cursor.x - this.offset.wrapper[0] - this.handle.offsetWidth / 2,
+                Cursor.y - this.offset.wrapper[1] - this.handle.offsetHeight / 2
+              ]);
+            }
+          },
+          stopTap: function() {
+            if (this.disabled || !this.tapping) {
+              return;
+            }
+            this.tapping = false;
+            this.setTargetValue(this.value.current);
+          },
+          startDrag: function() {
+            if (this.disabled) {
+              return;
+            }
+            this.dragging = true;
+            this.setWrapperOffset();
+            this.dragStartPosition = { x: Cursor.x, y: Cursor.y };
+            this.offset.mouse = [
+              Cursor.x - Position.get(this.handle)[0],
+              Cursor.y - Position.get(this.handle)[1]
+            ];
+            if (!this.wrapper.className.match(this.options.activeClass)) {
+              this.wrapper.className += " " + this.options.activeClass;
+            }
+            this.callDragStartCallback();
+          },
+          stopDrag: function() {
+            if (this.disabled || !this.dragging) {
+              return;
+            }
+            this.dragging = false;
+            var deltaX = this.bounds.availWidth === 0 ? 0 : (Cursor.x - this.dragStartPosition.x) / this.bounds.availWidth, deltaY = this.bounds.availHeight === 0 ? 0 : (Cursor.y - this.dragStartPosition.y) / this.bounds.availHeight, delta = [deltaX, deltaY];
+            var target = this.groupClone(this.value.current);
+            if (this.options.slide) {
+              var ratioChange = this.change;
+              target[0] += ratioChange[0] * 4;
+              target[1] += ratioChange[1] * 4;
+            }
+            this.setTargetValue(target);
+            this.wrapper.className = this.wrapper.className.replace(" " + this.options.activeClass, "");
+            this.callDragStopCallback(delta);
+          },
+          callAnimationCallback: function() {
+            var value = this.value.current;
+            if (this.options.snap && this.options.steps > 1) {
+              value = this.getClosestSteps(value);
+            }
+            if (!this.groupCompare(value, this.value.prev)) {
+              if (typeof this.options.animationCallback == "function") {
+                this.options.animationCallback.call(this, value[0], value[1]);
+              }
+              this.groupCopy(this.value.prev, value);
+            }
+          },
+          callTargetCallback: function() {
+            if (typeof this.options.callback == "function") {
+              this.options.callback.call(this, this.value.target[0], this.value.target[1]);
+            }
+          },
+          callDragStartCallback: function() {
+            if (typeof this.options.dragStartCallback == "function") {
+              this.options.dragStartCallback.call(this, this.value.target[0], this.value.target[1]);
+            }
+          },
+          callDragStopCallback: function(delta) {
+            if (typeof this.options.dragStopCallback == "function") {
+              this.options.dragStopCallback.call(this, this.value.target[0], this.value.target[1], delta);
+            }
+          },
+          animateWithRequestAnimationFrame: function(time) {
+            if (time) {
+              this.timeOffset = this.timeStamp ? time - this.timeStamp : 0;
+              this.timeStamp = time;
+            } else {
+              this.timeOffset = 25;
+            }
+            this.animate();
+            this.interval = this.requestAnimationFrame(this.animateWithRequestAnimationFrame);
+          },
+          animate: function(direct, first) {
+            if (direct && !this.dragging) {
+              return;
+            }
+            if (this.dragging) {
+              var prevTarget = this.groupClone(this.value.target);
+              var offset = [
+                Cursor.x - this.offset.wrapper[0] - this.offset.mouse[0],
+                Cursor.y - this.offset.wrapper[1] - this.offset.mouse[1]
+              ];
+              this.setTargetValueByOffset(offset, this.options.loose);
+              this.change = [
+                this.value.target[0] - prevTarget[0],
+                this.value.target[1] - prevTarget[1]
+              ];
+            }
+            if (this.dragging || first) {
+              this.groupCopy(this.value.current, this.value.target);
+            }
+            if (this.dragging || this.glide() || first) {
+              this.updateOffsetFromValue();
+              this.callAnimationCallback();
+            }
+          },
+          glide: function() {
+            var diff = [
+              this.value.target[0] - this.value.current[0],
+              this.value.target[1] - this.value.current[1]
+            ];
+            if (!diff[0] && !diff[1]) {
+              return false;
+            }
+            if (Math.abs(diff[0]) > this.valuePrecision[0] || Math.abs(diff[1]) > this.valuePrecision[1]) {
+              this.value.current[0] += diff[0] * Math.min(this.options.speed * this.timeOffset / 25, 1);
+              this.value.current[1] += diff[1] * Math.min(this.options.speed * this.timeOffset / 25, 1);
+            } else {
+              this.groupCopy(this.value.current, this.value.target);
+            }
+            return true;
+          },
+          updateOffsetFromValue: function() {
+            if (!this.options.snap) {
+              this.offset.current = this.getOffsetsByRatios(this.value.current);
+            } else {
+              this.offset.current = this.getOffsetsByRatios(
+                this.getClosestSteps(this.value.current)
+              );
+            }
+            if (!this.groupCompare(this.offset.current, this.offset.prev)) {
+              this.renderHandlePosition();
+              this.groupCopy(this.offset.prev, this.offset.current);
+            }
+          },
+          renderHandlePosition: function() {
+            var transform = "";
+            if (this.options.css3 && StylePrefix.transform) {
+              if (this.options.horizontal) {
+                transform += "translateX(" + this.offset.current[0] + "px)";
+              }
+              if (this.options.vertical) {
+                transform += " translateY(" + this.offset.current[1] + "px)";
+              }
+              this.handle.style[StylePrefix.transform] = transform;
+              return;
+            }
+            if (this.options.horizontal) {
+              this.handle.style.left = this.offset.current[0] + "px";
+            }
+            if (this.options.vertical) {
+              this.handle.style.top = this.offset.current[1] + "px";
+            }
+          },
+          setTargetValue: function(value, loose) {
+            var target = loose ? this.getLooseValue(value) : this.getProperValue(value);
+            this.groupCopy(this.value.target, target);
+            this.offset.target = this.getOffsetsByRatios(target);
+            this.callTargetCallback();
+          },
+          setTargetValueByOffset: function(offset, loose) {
+            var value = this.getRatiosByOffsets(offset);
+            var target = loose ? this.getLooseValue(value) : this.getProperValue(value);
+            this.groupCopy(this.value.target, target);
+            this.offset.target = this.getOffsetsByRatios(target);
+          },
+          getLooseValue: function(value) {
+            var proper = this.getProperValue(value);
+            return [
+              proper[0] + (value[0] - proper[0]) / 4,
+              proper[1] + (value[1] - proper[1]) / 4
+            ];
+          },
+          getProperValue: function(value) {
+            var proper = this.groupClone(value);
+            proper[0] = Math.max(proper[0], 0);
+            proper[1] = Math.max(proper[1], 0);
+            proper[0] = Math.min(proper[0], 1);
+            proper[1] = Math.min(proper[1], 1);
+            if (!this.dragging && !this.tapping || this.options.snap) {
+              if (this.options.steps > 1) {
+                proper = this.getClosestSteps(proper);
+              }
+            }
+            return proper;
+          },
+          getRatiosByOffsets: function(group) {
+            return [
+              this.getRatioByOffset(group[0], this.bounds.availWidth, this.bounds.left),
+              this.getRatioByOffset(group[1], this.bounds.availHeight, this.bounds.top)
+            ];
+          },
+          getRatioByOffset: function(offset, range, padding) {
+            return range ? (offset - padding) / range : 0;
+          },
+          getOffsetsByRatios: function(group) {
+            return [
+              this.getOffsetByRatio(group[0], this.bounds.availWidth, this.bounds.left),
+              this.getOffsetByRatio(group[1], this.bounds.availHeight, this.bounds.top)
+            ];
+          },
+          getOffsetByRatio: function(ratio, range, padding) {
+            return Math.round(ratio * range) + padding;
+          },
+          getStepNumber: function(value) {
+            return this.getClosestStep(value) * (this.options.steps - 1) + 1;
+          },
+          getClosestSteps: function(group) {
+            return [
+              this.getClosestStep(group[0]),
+              this.getClosestStep(group[1])
+            ];
+          },
+          getClosestStep: function(value) {
+            var k = 0;
+            var min = 1;
+            for (var i2 = 0; i2 <= this.options.steps - 1; i2++) {
+              if (Math.abs(this.stepRatios[i2] - value) < min) {
+                min = Math.abs(this.stepRatios[i2] - value);
+                k = i2;
+              }
+            }
+            return this.stepRatios[k];
+          },
+          groupCompare: function(a2, b) {
+            return a2[0] == b[0] && a2[1] == b[1];
+          },
+          groupCopy: function(a2, b) {
+            a2[0] = b[0];
+            a2[1] = b[1];
+          },
+          groupClone: function(a2) {
+            return [a2[0], a2[1]];
+          },
+          draggingOnDisabledAxis: function() {
+            return !this.options.horizontal && Cursor.xDiff > Cursor.yDiff || !this.options.vertical && Cursor.yDiff > Cursor.xDiff;
+          }
+        };
+        var bind = function(fn, context3) {
+          return function() {
+            return fn.apply(context3, arguments);
+          };
+        };
+        var addEventListener2 = function(element, type, callback) {
+          if (element.addEventListener) {
+            element.addEventListener(type, callback, false);
+          } else if (element.attachEvent) {
+            element.attachEvent("on" + type, callback);
+          }
+        };
+        var removeEventListener2 = function(element, type, callback) {
+          if (element.removeEventListener) {
+            element.removeEventListener(type, callback, false);
+          } else if (element.detachEvent) {
+            element.detachEvent("on" + type, callback);
+          }
+        };
+        var preventEventDefaults = function(e3) {
+          if (!e3) {
+            e3 = window.event;
+          }
+          if (e3.preventDefault) {
+            e3.preventDefault();
+          }
+          e3.returnValue = false;
+        };
+        var stopEventPropagation = function(e3) {
+          if (!e3) {
+            e3 = window.event;
+          }
+          if (e3.stopPropagation) {
+            e3.stopPropagation();
+          }
+          e3.cancelBubble = true;
+        };
+        var Cursor = {
+          /**
+           * Abstraction for making the combined mouse or touch position available at
+           * any time.
+           *
+           * It picks up the "move" events as an independent component and simply makes
+           * the latest x and y mouse/touch position of the user available at any time,
+           * which is requested with Cursor.x and Cursor.y respectively.
+           *
+           * It can receive both mouse and touch events consecutively, extracting the
+           * relevant meta data from each type of event.
+           *
+           * Cursor.refresh(e) is called to update the global x and y values, with a
+           * genuine MouseEvent or a TouchEvent from an event listener, e.g.
+           * mousedown/up or touchstart/end
+           */
+          x: 0,
+          y: 0,
+          xDiff: 0,
+          yDiff: 0,
+          refresh: function(e3) {
+            if (!e3) {
+              e3 = window.event;
+            }
+            if (e3.type == "mousemove") {
+              this.set(e3);
+            } else if (e3.touches) {
+              this.set(e3.touches[0]);
+            }
+          },
+          set: function(e3) {
+            var lastX = this.x, lastY = this.y;
+            if (e3.clientX || e3.clientY) {
+              this.x = e3.clientX;
+              this.y = e3.clientY;
+            } else if (e3.pageX || e3.pageY) {
+              this.x = e3.pageX - document.body.scrollLeft - document.documentElement.scrollLeft;
+              this.y = e3.pageY - document.body.scrollTop - document.documentElement.scrollTop;
+            }
+            this.xDiff = Math.abs(this.x - lastX);
+            this.yDiff = Math.abs(this.y - lastY);
+          }
+        };
+        var Position = {
+          /**
+           * Helper for extracting position of a DOM element, relative to the viewport
+           *
+           * The get(obj) method accepts a DOM element as the only parameter, and
+           * returns the position under a (x, y) tuple, as an array with two elements.
+           */
+          get: function(obj) {
+            var rect = { left: 0, top: 0 };
+            if (obj.getBoundingClientRect !== void 0) {
+              rect = obj.getBoundingClientRect();
+            }
+            return [rect.left, rect.top];
+          }
+        };
+        var StylePrefix = {
+          transform: getPrefixedStylePropName("transform"),
+          perspective: getPrefixedStylePropName("perspective"),
+          backfaceVisibility: getPrefixedStylePropName("backfaceVisibility")
+        };
+        function getPrefixedStylePropName(propName) {
+          var domPrefixes = "Webkit Moz ms O".split(" "), elStyle = document.documentElement.style;
+          if (elStyle[propName] !== void 0)
+            return propName;
+          propName = propName.charAt(0).toUpperCase() + propName.substr(1);
+          for (var i2 = 0; i2 < domPrefixes.length; i2++) {
+            if (elStyle[domPrefixes[i2] + propName] !== void 0) {
+              return domPrefixes[i2] + propName;
+            }
+          }
+        }
+        ;
+        function triggerWebkitHardwareAcceleration(element) {
+          if (StylePrefix.backfaceVisibility && StylePrefix.perspective) {
+            element.style[StylePrefix.perspective] = "1000px";
+            element.style[StylePrefix.backfaceVisibility] = "hidden";
+          }
+        }
+        ;
+        var vendors = ["webkit", "moz"];
+        var requestAnimationFrame2 = window.requestAnimationFrame;
+        var cancelAnimationFrame2 = window.cancelAnimationFrame;
+        for (var x = 0; x < vendors.length && !requestAnimationFrame2; ++x) {
+          requestAnimationFrame2 = window[vendors[x] + "RequestAnimationFrame"];
+          cancelAnimationFrame2 = window[vendors[x] + "CancelAnimationFrame"] || window[vendors[x] + "CancelRequestAnimationFrame"];
+        }
+        if (!requestAnimationFrame2) {
+          requestAnimationFrame2 = function(callback) {
+            return setTimeout(callback, 25);
+          };
+          cancelAnimationFrame2 = clearTimeout;
+        }
+        return Dragdealer2;
+      });
+    }
+  });
+
   // node_modules/.pnpm/sticksy@0.2.0/node_modules/sticksy/src/sticksy.js
   var require_sticksy = __commonJS({
     "node_modules/.pnpm/sticksy@0.2.0/node_modules/sticksy/src/sticksy.js"() {
@@ -11173,6 +11849,88 @@
   };
   _getGSAP5() && gsap5.registerPlugin(ScrollTrigger2);
 
+  // src/home-page/dragCode.ts
+  init_live_reload();
+  var import_dragdealer = __toESM(require_dragdealer(), 1);
+  function initializedragEffect() {
+    const cmsItem = $(".position_item");
+    const cmsItemLength = cmsItem.length;
+    function changeColor(item) {
+      const myColor = item.find(".color").css("background-color");
+      $(".handle_fill").css("border-color", myColor);
+      $(".handle_back").css("background-color", myColor);
+    }
+    changeColor(cmsItem.eq(0));
+    cmsItem.eq(0).addClass("active");
+    let lastValue = parseFloat(cmsItem.eq(0).find(".position_salary").text());
+    let targetValue = lastValue;
+    let animationFrameId = null;
+    function smoothInterpolation(target, current, factor = 0.1) {
+      return current + (target - current) * factor;
+    }
+    function animate() {
+      lastValue = smoothInterpolation(targetValue, lastValue);
+      $(".handle_count").text(lastValue.toFixed(1));
+      if (Math.abs(targetValue - lastValue) > 0.1) {
+        animationFrameId = requestAnimationFrame(animate);
+      } else {
+        lastValue = targetValue;
+        $(".handle_count").text(targetValue.toFixed(1));
+        animationFrameId = null;
+      }
+    }
+    new Dragdealer("drag-steps", {
+      steps: cmsItemLength,
+      speed: 0.2,
+      loose: false,
+      slide: true,
+      animationCallback: function(x, y) {
+        const exactIndex = x * (cmsItemLength - 1);
+        const lowerIndex = Math.floor(exactIndex);
+        const upperIndex = Math.ceil(exactIndex);
+        if (lowerIndex === upperIndex) {
+          targetValue = parseFloat(cmsItem.eq(lowerIndex).find(".position_salary").text());
+        } else {
+          const lowerValue = parseFloat(cmsItem.eq(lowerIndex).find(".position_salary").text());
+          const upperValue = parseFloat(cmsItem.eq(upperIndex).find(".position_salary").text());
+          const progress = exactIndex - lowerIndex;
+          targetValue = lowerValue + (upperValue - lowerValue) * progress;
+        }
+        if (!animationFrameId) {
+          animate();
+        }
+        cmsItem.removeClass("active");
+        const activeItemIndex = Math.round(exactIndex);
+        const activeItem = cmsItem.eq(activeItemIndex);
+        activeItem.addClass("active");
+        changeColor(activeItem);
+      },
+      callback: function(x, y) {
+        cmsItem.each(function(index) {
+          const currentDecimal = $(this).index() / (cmsItemLength - 1);
+          if (x == currentDecimal) {
+            cmsItem.removeClass("active");
+            $(this).addClass("active");
+            changeColor($(this));
+            const fixedValue = parseFloat($(this).find(".position_salary").text());
+            targetValue = fixedValue;
+            lastValue = fixedValue;
+            $(".handle_count").text(fixedValue.toFixed(1));
+          }
+        });
+      },
+      dragStopCallback(x, y) {
+        $(".handle_fill").addClass("release");
+      }
+    });
+    $(".handle").on("mousedown touchstart", function() {
+      $(".handle_fill").removeClass("release");
+    });
+    $(".handle").on("mouseup touchend", function() {
+      $(".handle_fill").addClass("release");
+    });
+  }
+
   // src/home-page/globalCode.ts
   init_live_reload();
 
@@ -12385,7 +13143,7 @@
   var import_sticksy2 = __toESM(require_sticksy2(), 1);
   function initializeScrollEffect() {
     const stickyConfig = {
-      topSpacing: 40,
+      topSpacing: 90,
       listen: true
     };
     const stickyEl = new Sticksy(".visual_text_left_elements", stickyConfig);
@@ -13360,6 +14118,7 @@
   initializeVideoTransitionAnimation();
   initializeGlobal();
   initializeScrollEffect();
+  initializedragEffect();
 })();
 /*! Bundled license information:
 
