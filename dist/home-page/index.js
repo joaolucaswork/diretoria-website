@@ -13022,7 +13022,6 @@
   }();
 
   // src/home-page/globalCode.ts
-  var import_sticksy = __toESM(require_sticksy2(), 1);
   function initializeGlobal() {
     const locomotiveScroll = new h({
       lenisOptions: {
@@ -13140,39 +13139,53 @@
 
   // src/home-page/scrollEffect.ts
   init_live_reload();
-  var import_sticksy2 = __toESM(require_sticksy2(), 1);
+  var import_sticksy = __toESM(require_sticksy2(), 1);
   function initializeScrollEffect() {
     const stickyConfig = {
       topSpacing: 90,
       listen: true
     };
     const stickyEl = new Sticksy(".visual_text_left_elements", stickyConfig);
-    const items = document.querySelectorAll(".text_elements_item");
-    const section = document.querySelector(".section_about");
-    function isElementInViewport(el) {
-      const rect = el.getBoundingClientRect();
-      return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+    stickyEl.onStateChanged = function(state) {
+      if (state === "fixed") {
+        stickyEl.nodeRef.classList.add("widget--sticky");
+      } else {
+        stickyEl.nodeRef.classList.remove("widget--sticky");
+      }
+    };
+    gsapWithCSS.registerPlugin(ScrollTrigger2);
+    const textItems = document.querySelectorAll(".text_item");
+    textItems.forEach((textItem, index) => {
+      const linkItem = document.querySelector(`.link_ref_item[href="#${textItem.id}"]`);
+      ScrollTrigger2.create({
+        trigger: textItem,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => updateState(textItem, linkItem, true),
+        onEnterBack: () => updateState(textItem, linkItem, true),
+        onLeave: () => updateState(textItem, linkItem, false),
+        onLeaveBack: () => updateState(textItem, linkItem, false)
+      });
+    });
+    function updateState(textItem, linkItem, isActive) {
+      if (isActive) {
+        textItem.classList.add("active");
+        linkItem.classList.add("current");
+      } else {
+        textItem.classList.remove("active");
+        linkItem.classList.remove("current");
+      }
     }
-    function updateColors() {
-      const sectionRect = section.getBoundingClientRect();
-      const sectionHeight = sectionRect.height;
-      const scrollProgress = Math.max(
-        0,
-        Math.min(1, -sectionRect.top / (sectionHeight - window.innerHeight))
-      );
-      items.forEach((item, index) => {
-        const itemProgress = (index + 1) / items.length;
-        if (scrollProgress > itemProgress) {
-          item.style.backgroundColor = "black";
-          item.style.color = "white";
-        } else {
-          item.style.backgroundColor = "transparent";
-          item.style.color = "black";
+    document.querySelectorAll(".link_ref_item").forEach((link) => {
+      link.addEventListener("click", function(event) {
+        event.preventDefault();
+        const targetId = this.getAttribute("href").substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          gsapWithCSS.to(window, { duration: 1, scrollTo: targetElement, ease: "power2.inOut" });
         }
       });
-    }
-    window.addEventListener("scroll", updateColors);
-    updateColors();
+    });
   }
 
   // src/home-page/scrollFlipAnimation.ts

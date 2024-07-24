@@ -14,45 +14,58 @@ export function initializeScrollEffect() {
   };
   const stickyEl = new Sticksy('.visual_text_left_elements', stickyConfig);
 
-  // Seleciona todos os elementos com a classe "text_elements_item"
-  const items = document.querySelectorAll('.text_elements_item');
-  const section = document.querySelector('.section_about');
+  stickyEl.onStateChanged = function (state) {
+    if (state === 'fixed') {
+      stickyEl.nodeRef.classList.add('widget--sticky');
+    } else {
+      stickyEl.nodeRef.classList.remove('widget--sticky');
+    }
+  };
 
-  // Função para verificar se um elemento está visível na viewport
-  function isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+  // CONFIGURAÇÃO DE SCROLL ANCORA
+  // Certifique-se de incluir os scripts do GSAP e ScrollTrigger antes deste código
+  // <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  // <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+  // Registra o plugin ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Seleciona todos os elementos com a classe "text_item"
+  const textItems = document.querySelectorAll('.text_item');
+
+  textItems.forEach((textItem, index) => {
+    const linkItem = document.querySelector(`.link_ref_item[href="#${textItem.id}"]`);
+
+    ScrollTrigger.create({
+      trigger: textItem,
+      start: 'top center',
+      end: 'bottom center',
+      onEnter: () => updateState(textItem, linkItem, true),
+      onEnterBack: () => updateState(textItem, linkItem, true),
+      onLeave: () => updateState(textItem, linkItem, false),
+      onLeaveBack: () => updateState(textItem, linkItem, false),
+    });
+  });
+
+  function updateState(textItem, linkItem, isActive) {
+    if (isActive) {
+      textItem.classList.add('active');
+      linkItem.classList.add('current');
+    } else {
+      textItem.classList.remove('active');
+      linkItem.classList.remove('current');
+    }
   }
 
-  // Função para atualizar as cores dos elementos
-  function updateColors() {
-    const sectionRect = section.getBoundingClientRect();
-    const sectionHeight = sectionRect.height;
-    const scrollProgress = Math.max(
-      0,
-      Math.min(1, -sectionRect.top / (sectionHeight - window.innerHeight))
-    );
-
-    items.forEach((item, index) => {
-      const itemProgress = (index + 1) / items.length;
-      if (scrollProgress > itemProgress) {
-        item.style.backgroundColor = 'black';
-        item.style.color = 'white';
-      } else {
-        item.style.backgroundColor = 'transparent';
-        item.style.color = 'black';
+  // Adiciona comportamento de rolagem suave aos links de âncora
+  document.querySelectorAll('.link_ref_item').forEach((link) => {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        gsap.to(window, { duration: 1, scrollTo: targetElement, ease: 'power2.inOut' });
       }
     });
-  }
-
-  // Adiciona o evento de scroll
-  window.addEventListener('scroll', updateColors);
-
-  // Chama a função inicialmente para configurar as cores corretas
-  updateColors();
+  });
 }

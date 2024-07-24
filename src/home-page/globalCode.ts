@@ -7,7 +7,6 @@ import 'locomotive-scroll/locomotive-scroll.css';
 import gsap from 'gsap';
 import LocomotiveScroll from 'locomotive-scroll';
 import MouseFollower from 'mouse-follower';
-import sticksy from 'sticksy';
 
 export function initializeGlobal() {
   // Locomotive Scroll
