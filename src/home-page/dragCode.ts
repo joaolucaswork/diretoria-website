@@ -4,16 +4,14 @@
 // @ts-nocheck
 
 import dragdealer from 'dragdealer';
-import { gsap } from 'gsap';
-import { Flip } from 'gsap/Flip';
 
 export function initializedragEffect() {
-  // Import GSAP and Flip plugin (make sure you've included these in your project)
-
-  gsap.registerPlugin(Flip);
+  // Import GSAP (make sure you've included it in your project)
+  // Note: Flip plugin is no longer needed
 
   const cmsItem = $('.position_item');
   const cmsItemLength = cmsItem.length;
+  let dragdealer; // Declare dragdealer variable to store the instance
 
   function changeColor(item) {
     const myColor = item.find('.color').css('background-color');
@@ -21,30 +19,21 @@ export function initializedragEffect() {
     $('.handle_back').css('background-color', myColor);
   }
 
-  function animateWidth(item) {
-    // Store the current state
-    const state = Flip.getState(cmsItem);
+  function updateActiveState(activeItem) {
+    // Remove 'active' class from all CMS items and their contact links
+    cmsItem.removeClass('active').find('.link_contato').removeClass('active');
 
-    // Reset all items to their original width
-    cmsItem.css('width', '');
+    // Add 'active' class to the new active item
+    activeItem.addClass('active');
 
-    // Increase the width of the active item slightly
-    item.css('width', '45%'); // Adjusted to a more subtle 110%
+    // Add 'active' class to the contact link of the active item
+    activeItem.find('.link_contato').addClass('active');
 
-    // Animate the change
-    Flip.from(state, {
-      duration: 0.3, // Reduced duration for a quicker, more subtle effect
-      ease: 'power2.out',
-      onComplete: () => {
-        // Optional: Add any post-animation logic here
-      },
-    });
+    changeColor(activeItem);
   }
 
   changeColor(cmsItem.eq(0));
-  cmsItem.eq(0).addClass('active');
-  // Remove initial animation call
-  // animateWidth(cmsItem.eq(0));
+  updateActiveState(cmsItem.eq(0));
 
   let lastValue = parseFloat(cmsItem.eq(0).find('.position_salary').text());
   let targetValue = lastValue;
@@ -67,7 +56,7 @@ export function initializedragEffect() {
     }
   }
 
-  new Dragdealer('drag-steps', {
+  dragdealer = new Dragdealer('drag-steps', {
     steps: cmsItemLength,
     speed: 0.2,
     loose: false,
@@ -90,22 +79,15 @@ export function initializedragEffect() {
         animate();
       }
 
-      // Update color and active item
-      cmsItem.removeClass('active');
+      // Update active state
       const activeItemIndex = Math.round(exactIndex);
-      const activeItem = cmsItem.eq(activeItemIndex);
-      activeItem.addClass('active');
-      changeColor(activeItem);
-      // Remove width animation from here
+      updateActiveState(cmsItem.eq(activeItemIndex));
     },
     callback: function (x, y) {
       cmsItem.each(function (index) {
         const currentDecimal = $(this).index() / (cmsItemLength - 1);
         if (x == currentDecimal) {
-          cmsItem.removeClass('active');
-          $(this).addClass('active');
-          changeColor($(this));
-          animateWidth($(this)); // Only animate width when scroll stops
+          updateActiveState($(this));
 
           const fixedValue = parseFloat($(this).find('.position_salary').text());
           targetValue = fixedValue;
@@ -125,5 +107,17 @@ export function initializedragEffect() {
 
   $('.handle').on('mouseup touchend', function () {
     $('.handle_fill').addClass('release');
+  });
+
+  // New function to handle mouseover events on CMS items
+  cmsItem.on('mouseenter', function () {
+    const index = $(this).index();
+    const position = index / (cmsItemLength - 1);
+    dragdealer.setValue(position);
+  });
+
+  // New function to handle mouseout events on CMS items
+  cmsItem.on('mouseleave', function () {
+    // Do nothing here, as per the requirement to keep the slider at its current position
   });
 }

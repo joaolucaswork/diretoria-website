@@ -11853,28 +11853,22 @@
   init_live_reload();
   var import_dragdealer = __toESM(require_dragdealer(), 1);
   function initializedragEffect() {
-    gsapWithCSS.registerPlugin(Flip);
     const cmsItem = $(".position_item");
     const cmsItemLength = cmsItem.length;
+    let dragdealer2;
     function changeColor(item) {
       const myColor = item.find(".color").css("background-color");
       $(".handle_fill").css("border-color", myColor);
       $(".handle_back").css("background-color", myColor);
     }
-    function animateWidth(item) {
-      const state = Flip.getState(cmsItem);
-      cmsItem.css("width", "");
-      item.css("width", "45%");
-      Flip.from(state, {
-        duration: 0.3,
-        // Reduced duration for a quicker, more subtle effect
-        ease: "power2.out",
-        onComplete: () => {
-        }
-      });
+    function updateActiveState(activeItem) {
+      cmsItem.removeClass("active").find(".link_contato").removeClass("active");
+      activeItem.addClass("active");
+      activeItem.find(".link_contato").addClass("active");
+      changeColor(activeItem);
     }
     changeColor(cmsItem.eq(0));
-    cmsItem.eq(0).addClass("active");
+    updateActiveState(cmsItem.eq(0));
     let lastValue = parseFloat(cmsItem.eq(0).find(".position_salary").text());
     let targetValue = lastValue;
     let animationFrameId = null;
@@ -11892,7 +11886,7 @@
         animationFrameId = null;
       }
     }
-    new Dragdealer("drag-steps", {
+    dragdealer2 = new Dragdealer("drag-steps", {
       steps: cmsItemLength,
       speed: 0.2,
       loose: false,
@@ -11912,20 +11906,14 @@
         if (!animationFrameId) {
           animate();
         }
-        cmsItem.removeClass("active");
         const activeItemIndex = Math.round(exactIndex);
-        const activeItem = cmsItem.eq(activeItemIndex);
-        activeItem.addClass("active");
-        changeColor(activeItem);
+        updateActiveState(cmsItem.eq(activeItemIndex));
       },
       callback: function(x, y) {
         cmsItem.each(function(index) {
           const currentDecimal = $(this).index() / (cmsItemLength - 1);
           if (x == currentDecimal) {
-            cmsItem.removeClass("active");
-            $(this).addClass("active");
-            changeColor($(this));
-            animateWidth($(this));
+            updateActiveState($(this));
             const fixedValue = parseFloat($(this).find(".position_salary").text());
             targetValue = fixedValue;
             lastValue = fixedValue;
@@ -11942,6 +11930,13 @@
     });
     $(".handle").on("mouseup touchend", function() {
       $(".handle_fill").addClass("release");
+    });
+    cmsItem.on("mouseenter", function() {
+      const index = $(this).index();
+      const position = index / (cmsItemLength - 1);
+      dragdealer2.setValue(position);
+    });
+    cmsItem.on("mouseleave", function() {
     });
   }
 
