@@ -23,14 +23,14 @@ export function initializeGlobal() {
   MouseFollower.registerGSAP(gsap);
   const cursor = new MouseFollower({});
 
-  const el = document.querySelectorAll('.h1-main-home');
+  const el = document.querySelectorAll('.your-button');
   el.forEach(function (element) {
     element.addEventListener('mouseenter', () => {
-      cursor.setImg;
+      cursor.setState('-opaque');
     });
 
     element.addEventListener('mouseleave', () => {
-      cursor.removeImg();
+      cursor.setState('-opaque');
     });
   });
 

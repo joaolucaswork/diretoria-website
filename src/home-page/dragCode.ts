@@ -4,8 +4,14 @@
 // @ts-nocheck
 
 import dragdealer from 'dragdealer';
+import { gsap } from 'gsap';
+import { Flip } from 'gsap/Flip';
 
 export function initializedragEffect() {
+  // Import GSAP and Flip plugin (make sure you've included these in your project)
+
+  gsap.registerPlugin(Flip);
+
   const cmsItem = $('.position_item');
   const cmsItemLength = cmsItem.length;
 
@@ -14,8 +20,31 @@ export function initializedragEffect() {
     $('.handle_fill').css('border-color', myColor);
     $('.handle_back').css('background-color', myColor);
   }
+
+  function animateWidth(item) {
+    // Store the current state
+    const state = Flip.getState(cmsItem);
+
+    // Reset all items to their original width
+    cmsItem.css('width', '');
+
+    // Increase the width of the active item slightly
+    item.css('width', '45%'); // Adjusted to a more subtle 110%
+
+    // Animate the change
+    Flip.from(state, {
+      duration: 0.3, // Reduced duration for a quicker, more subtle effect
+      ease: 'power2.out',
+      onComplete: () => {
+        // Optional: Add any post-animation logic here
+      },
+    });
+  }
+
   changeColor(cmsItem.eq(0));
   cmsItem.eq(0).addClass('active');
+  // Remove initial animation call
+  // animateWidth(cmsItem.eq(0));
 
   let lastValue = parseFloat(cmsItem.eq(0).find('.position_salary').text());
   let targetValue = lastValue;
@@ -61,12 +90,13 @@ export function initializedragEffect() {
         animate();
       }
 
-      // Atualiza a cor e o item ativo
+      // Update color and active item
       cmsItem.removeClass('active');
       const activeItemIndex = Math.round(exactIndex);
       const activeItem = cmsItem.eq(activeItemIndex);
       activeItem.addClass('active');
       changeColor(activeItem);
+      // Remove width animation from here
     },
     callback: function (x, y) {
       cmsItem.each(function (index) {
@@ -75,6 +105,7 @@ export function initializedragEffect() {
           cmsItem.removeClass('active');
           $(this).addClass('active');
           changeColor($(this));
+          animateWidth($(this)); // Only animate width when scroll stops
 
           const fixedValue = parseFloat($(this).find('.position_salary').text());
           targetValue = fixedValue;

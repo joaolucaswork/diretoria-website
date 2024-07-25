@@ -57,6 +57,7 @@
   "dependencies": {
     "@finsweet/ts-utils": "^0.40.0",
     "animejs": "^3.2.2",
+    "blobity": "^0.2.3",
     "core-js": "^3.37.1",
     "dragdealer": "^0.10.0",
     "gsap": "^3.12.5",

@@ -11,12 +11,13 @@ body {
 .plyr__poster {
   background-size: cover !important;
 }
-video {
-  object-fit: cover;
-}
 
 body.scrollflip-relative [tr-scrollflip-sticky='true'] {
   position: relative;
+}
+
+.video_bg-plyr.home_main {
+  width: 100%;
 }
 
 .mf-cursor-text {

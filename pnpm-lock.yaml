@@ -14,6 +14,9 @@ importers:
       animejs:
         specifier: ^3.2.2
         version: 3.2.2
+      blobity:
+        specifier: ^0.2.3
+        version: 0.2.3(react@18.3.1)
       core-js:
         specifier: ^3.37.1
         version: 3.37.1
@@ -511,6 +514,12 @@ packages:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
 
+  blobity@0.2.3:
+    resolution: {integrity: sha512-ooIyE44R+Gc+DbGCkMAcyAPln30nvQnZIsjmCDO9PUUoRkv2fNliHhsunL+GFp5JmAzbinO4iCeBwjjO6JeEcg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      vue: next
+
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
 
@@ -912,6 +921,9 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
+  kinet@2.2.1:
+    resolution: {integrity: sha512-UmnTPmnEokjxBeB3gPkOnTwRlIUaAeB+t21E+HJGzRKCGdJTUF3CTztK5yzzEuBQ1BZ0I0ovrY73+ctpPWFIOg==}
+
   lenis@1.0.45:
     resolution: {integrity: sha512-wiaYRxr7rK1rY+dhGdMLowV0rkjg+1B2nI50Igyu5USkjDY6lkBNCJi0mVaSL/X3ECyAm/oA0nsihq8ic3p9wg==}
     peerDependencies:
@@ -951,6 +963,9 @@ packages:
 
   lodash.startcase@4.4.0:
     resolution: {integrity: sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==}
+
+  lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -1840,6 +1855,12 @@ snapshots:
 
   binary-extensions@2.3.0: {}
 
+  blobity@0.2.3(react@18.3.1):
+    dependencies:
+      kinet: 2.2.1
+      lodash: 4.17.21
+      react: 18.3.1
+
   brace-expansion@1.1.11:
     dependencies:
       balanced-match: 1.0.2
@@ -2242,8 +2263,7 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  js-tokens@4.0.0:
-    optional: true
+  js-tokens@4.0.0: {}
 
   js-yaml@3.14.1:
     dependencies:
@@ -2267,6 +2287,8 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+
+  kinet@2.2.1: {}
 
   lenis@1.0.45(react@18.3.1):
     dependencies:
@@ -2308,10 +2330,11 @@ snapshots:
 
   lodash.startcase@4.4.0: {}
 
+  lodash@4.17.21: {}
+
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
-    optional: true
 
   lru-cache@4.1.5:
     dependencies:
@@ -2488,7 +2511,6 @@ snapshots:
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
-    optional: true
 
   read-yaml-file@1.1.0:
     dependencies:
