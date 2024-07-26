@@ -82,7 +82,7 @@ export function initializeVideoTransitionAnimation() {
     $('.nav_component').removeClass('dark'); // Removendo a classe 'dark' do nav_component
     $('menu_link').removeClass('white'); // Removendo a classe 'dark' do menu_link
     $('.effect_visual_inner').css('opacity', '1'); // Restaurar opacidade para 100%
-    $('.effect_visual_inner').css('display', 'block'); // Restaurar opacidade para 100%
+    $('.effect_visual_inner').css('display', 'flex'); // Restaurar opacidade para 100%
     gsap.set('.your-button', { opacity: 1, visibility: 'visible' });
 
     if (videoStartedOnce) {
@@ -94,6 +94,6 @@ export function initializeVideoTransitionAnimation() {
   // Garantir que a opacidade inicial seja 100%
   $(document).ready(() => {
     $('.effect_visual_inner').css('opacity', '1');
-    $('.effect_visual_inner').css('display', 'block');
+    $('.effect_visual_inner').css('display', 'flex');
   });
 }
