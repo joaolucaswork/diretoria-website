@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { getPlayer } from './videoPlayer';
 
@@ -28,7 +29,9 @@ export function initializeVideoTransitionAnimation() {
         $('.nav_logo').addClass('hide');
         $('.close-icon').addClass('playing');
         $('.nav_component').addClass('dark'); // Adicionando a classe 'dark' ao nav_component
+        $('.menu_link').addClass('white');
         $('.effect_visual_inner').css('opacity', '0'); // Reduzir opacidade para 0
+        $('.effect_visual_inner').css('display', 'none'); // Reduzir opacidade para 0
         videoStartedOnce = true;
         disableScroll();
       } else {
@@ -56,6 +59,7 @@ export function initializeVideoTransitionAnimation() {
     $('.nav_logo').removeClass('hide');
     $('.close-icon').removeClass('playing');
     $('.nav_component').removeClass('dark'); // Removendo a classe 'dark' do nav_component
+    $('.menu_link').removeClass('white');
     $('.effect_visual_inner').css('opacity', '1'); // Restaurar opacidade para 100%
     gsap.set('.your-button', { opacity: 1, visibility: 'visible' });
 
@@ -76,7 +80,9 @@ export function initializeVideoTransitionAnimation() {
     $('.nav_logo').removeClass('hide');
     $('.close-icon').removeClass('playing');
     $('.nav_component').removeClass('dark'); // Removendo a classe 'dark' do nav_component
+    $('menu_link').removeClass('white'); // Removendo a classe 'dark' do menu_link
     $('.effect_visual_inner').css('opacity', '1'); // Restaurar opacidade para 100%
+    $('.effect_visual_inner').css('display', 'block'); // Restaurar opacidade para 100%
     gsap.set('.your-button', { opacity: 1, visibility: 'visible' });
 
     if (videoStartedOnce) {
@@ -88,5 +94,6 @@ export function initializeVideoTransitionAnimation() {
   // Garantir que a opacidade inicial seja 100%
   $(document).ready(() => {
     $('.effect_visual_inner').css('opacity', '1');
+    $('.effect_visual_inner').css('display', 'block');
   });
 }

@@ -9,8 +9,8 @@ let player;
 export function initializeVideoPlayer() {
   player = new Plyr('#player', {
     clickToPlay: false,
-    controls: [],
-    loop: { active: true },
+    controls: ['volume', 'fullscreen'],
+    loop: { active: false },
   });
 
   return player;
