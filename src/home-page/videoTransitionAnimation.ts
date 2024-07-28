@@ -31,7 +31,7 @@ export function initializeVideoTransitionAnimation() {
         $('.nav_component').addClass('dark'); // Adicionando a classe 'dark' ao nav_component
         $('.menu_link').addClass('white');
         $('.effect_visual_inner').css('opacity', '0'); // Reduzir opacidade para 0
-        $('.effect_visual_inner').css('display', 'none'); // Reduzir opacidade para 0
+        $('.effect_visual_inner').css('display', 'none'); // Esconder o elemento
         videoStartedOnce = true;
         disableScroll();
       } else {
@@ -40,7 +40,11 @@ export function initializeVideoTransitionAnimation() {
     },
   });
 
-  tl.fromTo('.your-div', { height: '25%' }, { height: '100%' });
+  tl.fromTo(
+    '.your-div',
+    { height: () => getComputedStyle(document.querySelector('.your-div')).height },
+    { height: '100%' }
+  );
   tl.fromTo('.your-image', { scale: 1.8 }, { scale: 1 }, '<');
 
   $('.your-button').on('mousedown touchstart', () => tl.timeScale(1).play());
@@ -61,6 +65,7 @@ export function initializeVideoTransitionAnimation() {
     $('.nav_component').removeClass('dark'); // Removendo a classe 'dark' do nav_component
     $('.menu_link').removeClass('white');
     $('.effect_visual_inner').css('opacity', '1'); // Restaurar opacidade para 100%
+    $('.effect_visual_inner').css('display', 'flex'); // Mostrar o elemento novamente
     gsap.set('.your-button', { opacity: 1, visibility: 'visible' });
 
     if (videoStartedOnce) {
@@ -80,9 +85,9 @@ export function initializeVideoTransitionAnimation() {
     $('.nav_logo').removeClass('hide');
     $('.close-icon').removeClass('playing');
     $('.nav_component').removeClass('dark'); // Removendo a classe 'dark' do nav_component
-    $('menu_link').removeClass('white'); // Removendo a classe 'dark' do menu_link
+    $('.menu_link').removeClass('white'); // Removendo a classe 'white' do menu_link
     $('.effect_visual_inner').css('opacity', '1'); // Restaurar opacidade para 100%
-    $('.effect_visual_inner').css('display', 'flex'); // Restaurar opacidade para 100%
+    $('.effect_visual_inner').css('display', 'flex'); // Mostrar o elemento novamente
     gsap.set('.your-button', { opacity: 1, visibility: 'visible' });
 
     if (videoStartedOnce) {

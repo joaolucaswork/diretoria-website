@@ -7,10 +7,10 @@ import Plyr from 'plyr';
 let player;
 
 export function initializeVideoPlayer() {
-  player = new Plyr('#player', {
+  player = new Plyr('.swiper-container .swiper-slide > .video_bg-plyr', {
     clickToPlay: false,
     controls: ['volume', 'fullscreen'],
-    loop: { active: false },
+    loop: { active: true },
   });
 
   return player;

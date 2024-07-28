@@ -9,7 +9,7 @@ import sticksy from 'sticksy';
 export function initializeScrollEffect() {
   // Configuração do Sticksy
   const stickyConfig = {
-    topSpacing: 90,
+    topSpacing: 40,
     listen: true,
   };
   const stickyEl = new Sticksy('.visual_text_left_elements', stickyConfig);
