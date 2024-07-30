@@ -24,15 +24,6 @@ export function initializeGlobal() {
   const cursor = new MouseFollower({});
 
   const el = document.querySelectorAll('.your-button');
-  el.forEach(function (element) {
-    element.addEventListener('mouseenter', () => {
-      cursor.setState('-opaque');
-    });
-
-    element.addEventListener('mouseleave', () => {
-      cursor.setState('-opaque');
-    });
-  });
 
   new WordPlay({
     className: 'h1-main-home',
