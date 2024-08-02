@@ -3,8 +3,11 @@
 // @ts-nocheck
 
 import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import sticksy from 'sticksy';
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export function initializeScrollEffect() {
   // Configuração do Sticksy
@@ -22,40 +25,74 @@ export function initializeScrollEffect() {
     }
   };
 
-  // CONFIGURAÇÃO DE SCROLL ANCORA
-  // Certifique-se de incluir os scripts do GSAP e ScrollTrigger antes deste código
-  // <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-  // <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-
-  // Registra o plugin ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Seleciona todos os elementos com a classe "text_item"
+  // Configuração do ScrollTrigger para os itens de texto
   const textItems = document.querySelectorAll('.text_item');
+  const textElementsItems = document.querySelectorAll('.text_elements_item');
 
   textItems.forEach((textItem, index) => {
     const linkItem = document.querySelector(`.link_ref_item[href="#${textItem.id}"]`);
+    const textElementItem = textElementsItems[index];
 
     ScrollTrigger.create({
       trigger: textItem,
       start: 'top center',
       end: 'bottom center',
-      onEnter: () => updateState(textItem, linkItem, true),
-      onEnterBack: () => updateState(textItem, linkItem, true),
-      onLeave: () => updateState(textItem, linkItem, false),
-      onLeaveBack: () => updateState(textItem, linkItem, false),
+      onEnter: () => updateState(textItem, linkItem, textElementItem, true),
+      onEnterBack: () => updateState(textItem, linkItem, textElementItem, true),
+      onLeave: () => updateState(textItem, linkItem, textElementItem, false),
+      onLeaveBack: () => updateState(textItem, linkItem, textElementItem, false),
     });
   });
 
-  function updateState(textItem, linkItem, isActive) {
+  function updateState(textItem, linkItem, textElementItem, isActive) {
     if (isActive) {
       textItem.classList.add('active');
       linkItem.classList.add('current');
+      if (textElementItem) {
+        textElementItem.classList.add('active');
+      }
     } else {
       textItem.classList.remove('active');
       linkItem.classList.remove('current');
+      if (textElementItem) {
+        textElementItem.classList.remove('active');
+      }
     }
   }
+
+  // Configuração da marquee sincronizada com o scroll
+  $('.marquee_about').each(function () {
+    const track = $(this).find('.marquee_track_about');
+    const items = $(this).find('.marquee_item_about');
+
+    // Crie um timeline para a animação da marquee
+    const tl = gsap.timeline({
+      paused: true,
+      defaults: { ease: 'expo.inOut', duration: 1 },
+    });
+
+    // Adicione as animações ao timeline
+    items.each((index, item) => {
+      if (index < items.length - 1) {
+        tl.to(track, { yPercent: (index + 1) * -100 }, index);
+      }
+    });
+
+    // Sincronize a animação da marquee com o scroll das seções
+    textItems.forEach((textItem, index) => {
+      ScrollTrigger.create({
+        trigger: textItem,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => {
+          tl.tweenTo(index);
+        },
+        onEnterBack: () => {
+          tl.tweenTo(index);
+        },
+      });
+    });
+  });
 
   // Adiciona comportamento de rolagem suave aos links de âncora
   document.querySelectorAll('.link_ref_item').forEach((link) => {
