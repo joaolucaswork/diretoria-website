@@ -10,7 +10,17 @@ import MouseFollower from 'mouse-follower';
 
 export function initializeGlobal() {
   // Locomotive Scroll
-  const locomotiveScroll = new LocomotiveScroll({});
+  const locomotiveScroll = new LocomotiveScroll({
+    smoothMobile: 0,
+    smartphone: {
+      smooth: !0,
+      breakpoint: 767,
+    },
+    tablet: {
+      smooth: !1,
+      breakpoint: 1024,
+    },
+  });
 
   //Mouse Plugin
   MouseFollower.registerGSAP(gsap);
