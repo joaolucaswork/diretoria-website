@@ -14,11 +14,7 @@ export function initializeVideoTransitionAnimation() {
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     slidesPerView: 'auto',
     spaceBetween: 32,
-    allowTouchMove: true,
-    loop: true,
-    followFinger: true,
     freeMode: false,
-    slideToClickedSlide: true,
     lazy: true,
     disableOnInteraction: false,
     mousewheel: {
