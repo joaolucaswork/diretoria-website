@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-unused-vars */
