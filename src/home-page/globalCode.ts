@@ -2,26 +2,10 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import 'locomotive-scroll/locomotive-scroll.css';
-
 import gsap from 'gsap';
-import LocomotiveScroll from 'locomotive-scroll';
 import MouseFollower from 'mouse-follower';
 
 export function initializeGlobal() {
-  // Locomotive Scroll
-  const locomotiveScroll = new LocomotiveScroll({
-    smoothMobile: 0,
-    smartphone: {
-      smooth: !0,
-      breakpoint: 767,
-    },
-    tablet: {
-      smooth: !1,
-      breakpoint: 1024,
-    },
-  });
-
   //Mouse Plugin
   MouseFollower.registerGSAP(gsap);
   const cursor = new MouseFollower({});
