@@ -11,13 +11,6 @@ export function initializeVideoTransitionAnimation() {
   let videoStartedOnce = false;
   let animationActive = false;
 
-  function disableScroll() {
-    $('body').css('overflow', 'hidden');
-  }
-
-  function enableScroll() {
-    $('body').css('overflow', '');
-  }
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     slidesPerView: 'auto',
     spaceBetween: 32,
