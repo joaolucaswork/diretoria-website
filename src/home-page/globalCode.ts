@@ -10,14 +10,7 @@ import MouseFollower from 'mouse-follower';
 
 export function initializeGlobal() {
   // Locomotive Scroll
-  const locomotiveScroll = new LocomotiveScroll({
-    lenisOptions: {
-      lerp: 0.1,
-      duration: 0.7,
-      wheelMultiplier: 1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-    },
-  });
+  const locomotiveScroll = new LocomotiveScroll({});
 
   //Mouse Plugin
   MouseFollower.registerGSAP(gsap);
