@@ -3,16 +3,8 @@
 // @ts-nocheck
 
 //import gsap from 'gsap';
-import MouseFollower from 'mouse-follower';
 
 export function initializeGlobal() {
-  //Mouse Plugin
-
-  MouseFollower.registerGSAP(gsap);
-  const cursor = new MouseFollower({});
-
-  const el = document.querySelectorAll('.your-button');
-
   new WordPlay({
     className: 'h1-main-home',
     mode: 'letter',
