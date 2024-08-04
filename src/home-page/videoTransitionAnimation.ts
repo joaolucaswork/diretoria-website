@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { gsap } from 'gsap';
+//import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { getPlayer } from './videoPlayer';
@@ -66,7 +66,6 @@ export function initializeVideoTransitionAnimation() {
         applyPlayingState();
         videoStartedOnce = true;
         animationActive = true;
-        disableScroll();
         updateButtonText();
       } else {
         console.warn('Player de vídeo não está pronto ou não tem método play');
@@ -145,7 +144,6 @@ export function initializeVideoTransitionAnimation() {
     }
     applyPausedState();
     animationActive = false;
-    enableScroll();
   }
 
   $('.close-icon').on('click', () => {

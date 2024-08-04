@@ -2,13 +2,14 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { gsap } from 'gsap';
-import { Flip } from 'gsap/Flip';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// import { gsap } from 'gsap';
+// import { Flip } from 'gsap/Flip';
+//import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import { attr } from './utils';
+//import { attr } from './utils';
 
 export function initializeScrollFlipAnimation() {
+  /*
   gsap.registerPlugin(ScrollTrigger, Flip);
   ScrollTrigger.normalizeScroll(true);
 
@@ -61,4 +62,5 @@ export function initializeScrollFlipAnimation() {
     createTimeline();
     window.addEventListener('resize', gsap.debounce(createTimeline, 250));
   });
+  */
 }

@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import gsap from 'gsap';
+//import gsap from 'gsap';
 import MouseFollower from 'mouse-follower';
 
 export function initializeGlobal() {
