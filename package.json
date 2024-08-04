@@ -39,9 +39,9 @@
     "@changesets/cli": "^2.27.7",
     "@finsweet/eslint-config": "^2.0.7",
     "@finsweet/tsconfig": "^1.3.4",
-    "@playwright/test": "^1.45.2",
-    "@typescript-eslint/eslint-plugin": "^7.16.1",
-    "@typescript-eslint/parser": "^7.16.1",
+    "@playwright/test": "^1.45.3",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "esbuild": "^0.20.2",
@@ -52,7 +52,7 @@
     "prettier": "^3.3.3",
     "sass": "^1.77.8",
     "sass-loader": "^14.2.1",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "@finsweet/ts-utils": "^0.40.0",
@@ -66,7 +66,7 @@
     "scrambling-text": "^1.2.0",
     "split-type": "^0.3.4",
     "sticksy": "^0.2.0",
-    "swiper": "^11.1.5",
+    "swiper": "^11.1.9",
     "typed.js": "^2.1.0"
   },
   "engines": {

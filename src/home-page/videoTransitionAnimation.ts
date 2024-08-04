@@ -17,9 +17,6 @@ export function initializeVideoTransitionAnimation() {
     freeMode: false,
     lazy: true,
     disableOnInteraction: false,
-    mousewheel: {
-      forceToAxis: true,
-    },
     keyboard: {
       enabled: true,
       onlyInViewport: true,
