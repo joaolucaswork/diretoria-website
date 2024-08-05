@@ -6,7 +6,6 @@ import { CustomEase } from 'gsap/CustomEase';
 import { Flip } from 'gsap/Flip';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import { initializeGlobal } from './globalCode';
 import { initializeMarqueeAnimation } from './iconsRotacao';
 import { initializeScrollEffect } from './missaoAnimation';
 import { initializedragEffect } from './priceAnimation';
@@ -18,6 +17,5 @@ gsap.registerPlugin(Flip, ScrollTrigger, CustomEase);
 initializeVideoPlayer();
 initializeMarqueeAnimation();
 initializeVideoTransitionAnimation();
-initializeGlobal();
 initializeScrollEffect();
 initializedragEffect();
