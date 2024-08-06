@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-//import { gsap } from 'gsap';
+import { gsap } from 'gsap';
 
 export function initializeMarqueeAnimation() {
   $('.marquee').each(function () {

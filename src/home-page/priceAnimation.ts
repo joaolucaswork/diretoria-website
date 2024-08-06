@@ -5,8 +5,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import dragdealer from 'dragdealer';
-
 export function initializedragEffect() {
   // Import GSAP (make sure you've included it in your project)
   // Note: Flip plugin is no longer needed
