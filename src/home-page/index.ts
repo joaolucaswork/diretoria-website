@@ -1,6 +1,7 @@
 import 'plyr/dist/plyr.css';
 import '../styles/index.scss';
 
+// import Swiper and modules styles
 import { gsap } from 'gsap';
 import { CustomEase } from 'gsap/CustomEase';
 import { Flip } from 'gsap/Flip';

@@ -3,6 +3,7 @@
 @import 'mouse-follower/dist/mouse-follower.min.css';
 
 
+
 .plyr__controls {
   z-index: 9999999 !important; /* Defina o valor de z-index conforme necessário */
 }
@@ -37,4 +38,22 @@ body.scrollflip-relative [tr-scrollflip-sticky='true'] {
   border-color: #000000;
   outline: 0;
 }
+
+html {--plyr-color-main: white;}
+.plyr__play-large {
+  background-color: white; color: black !important; }
+.plyr__controls button:hover svg {fill: white; }
+.plyr__controls button:hover {background-color: #ffffff40;}
+.plyr--video .plyr__control:focus-visible, .plyr--video .plyr__control:hover, .plyr--video .plyr__control[aria-expanded=true] {
+    background: #ffffff3d !important;
+    color: #fff !important;
+}
+.plyr--full-ui.plyr--video .plyr__control--overlaid {
+    display: block; 
+    -webkit-backdrop-filter: blur(45px);
+    backdrop-filter: blur(45px) ; 
+    background-color: #ffffff50; 
+    color: #ffffff8a;
+        scale: 1;
+    }
 
