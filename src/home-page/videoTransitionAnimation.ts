@@ -25,9 +25,8 @@ export function initializeVideoTransitionAnimation() {
     lazy: true,
     keyboard: { enabled: true, onlyInViewport: true },
     navigation: {
-      nextEl: '#right-button',
-      prevEl: '#left-button',
-      disabledClass: 'disabled_swiper_button',
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
     },
     breakpoints: {
       640: { slidesPerView: 1, spaceBetween: 20 },

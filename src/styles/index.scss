@@ -57,3 +57,26 @@ html {--plyr-color-main: white;}
         scale: 1;
     }
 
+
+    .swiper-button-prev, .swiper-button-next {
+      background-color: #fff !important;
+      color: #000000 !important; 
+      border-radius: 100vw;
+      padding: 8px 16px !important;
+      inset: 20% 3% 0% auto;
+      top: 30svh !important;
+      box-shadow: 0 2px 14px 11px #0003;
+      width: 2.8em !important;
+      height: 2.8em !important;
+  }
+
+  .swiper-button-prev:after, .swiper-button-next:after {
+    font-family: swiper-icons;
+    font-size: 1em !important;
+  }
+
+  .swiper-button-disabled {
+    opacity: 0 !important;
+  }
+
+
