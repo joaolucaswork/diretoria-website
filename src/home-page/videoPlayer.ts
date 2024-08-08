@@ -7,7 +7,7 @@ import Plyr from 'plyr';
 let player;
 
 export function initializeVideoPlayer() {
-  player = new Plyr('.swiper-container .swiper-slide > .video_bg-plyr', {
+  player = new Plyr('.video_bg-plyr', {
     clickToPlay: true,
     controls: ['volume', 'fullscreen', 'play-large', 'play'],
     loop: { active: true },
