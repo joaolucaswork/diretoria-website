@@ -12,13 +12,13 @@ import { initializeformCode } from './formCode';
 import { initializeMarqueeAnimation } from './iconsRotacao';
 import { initializedragEffect } from './priceAnimation';
 import { initializeVideoPlayer } from './videoPlayer';
-import { initializeVideoTransitionAnimation } from './videoTransitionAnimation';
+//import { initializeVideoTransitionAnimation } from './videoTransitionAnimation';
 
 gsap.registerPlugin(Flip, ScrollTrigger, CustomEase);
 
 initializeVideoPlayer();
 initializeformCode();
 initializeMarqueeAnimation();
-initializeVideoTransitionAnimation();
+//initializeVideoTransitionAnimation();
 initializedragEffect();
 initializeCarroselVideo();
