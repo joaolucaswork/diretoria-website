@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import Plyr from 'plyr';
+//import Plyr from 'plyr';
 
 let player;
 
