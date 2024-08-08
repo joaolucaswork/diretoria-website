@@ -10,7 +10,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initializeCarroselVideo } from './carroselVideo';
 import { initializeformCode } from './formCode';
 import { initializeMarqueeAnimation } from './iconsRotacao';
-import { initializedragEffect } from './priceAnimation';
 import { initializeVideoPlayer } from './videoPlayer';
 import { initializeVideoTransitionAnimation } from './videoTransitionAnimation';
 
@@ -21,5 +20,4 @@ initializeformCode();
 initializeMarqueeAnimation();
 initializeVideoTransitionAnimation();
 //initializeScrollEffect();
-initializedragEffect();
 initializeCarroselVideo();

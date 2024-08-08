@@ -8,9 +8,8 @@ let player;
 
 export function initializeVideoPlayer() {
   player = new Plyr('.video_bg-plyr', {
-    clickToPlay: true,
     controls: ['volume', 'fullscreen', 'play-large', 'play'],
-    loop: { active: true },
+    loop: { active: false },
   });
 
   return player;
