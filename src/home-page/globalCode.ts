@@ -3,17 +3,15 @@
 // @ts-nocheck
 
 import gsap from 'gsap';
-//import LocomotiveScroll from 'locomotive-scroll';
-//import MouseFollower from 'mouse-follower';
+import LocomotiveScroll from 'locomotive-scroll';
+import MouseFollower from 'mouse-follower';
 import SplitType from 'split-type';
 
 export function initializeglobalCode() {
-  //const locomotiveScroll = new LocomotiveScroll();
+  const locomotiveScroll = new LocomotiveScroll();
 
-  /*
   MouseFollower.registerGSAP(gsap);
   const cursor = new MouseFollower();
-  */
 
   // Inicializa o SplitType
   new SplitType('[text-split]', { types: 'words,chars', tagName: 'span' });

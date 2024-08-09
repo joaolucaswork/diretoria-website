@@ -1,6 +1,6 @@
 import * as esbuild from 'esbuild';
 import { readdirSync } from 'fs';
-import { readFileSync } from 'fs';
+import { readdirSync } from 'fs';
 import { join, sep } from 'path';
 import * as sass from 'sass';
 

@@ -8,6 +8,8 @@
 import Swiper from 'swiper';
 
 export function videoSettings() {
+  defineCustomElements();
+
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     slidesPerView: 'auto',
     spaceBetween: 32,
