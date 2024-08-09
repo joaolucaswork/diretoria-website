@@ -10,6 +10,39 @@ export function initializeVideoTransitionAnimation() {
   let videoStartedOnce = false;
   let animationActive = false;
 
+<<<<<<< HEAD:src/videoTransitionAnimation.ts
+=======
+  const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
+    modules: [Navigation],
+    slidesPerView: 'auto',
+    spaceBetween: 32,
+    followFinger: true,
+    freeMode: false,
+    lazy: true,
+    keyboard: { enabled: true, onlyInViewport: true },
+    navigation: {
+      nextEl: '#right-button',
+      prevEl: '#left-button',
+      disabledClass: 'disabled_swiper_button',
+    },
+    breakpoints: {
+      640: { slidesPerView: 1, spaceBetween: 20 },
+      1024: { slidesPerView: 2, spaceBetween: 56 },
+      1440: { slidesPerView: 3, spaceBetween: 32 },
+    },
+  });
+
+  // Adiciona o evento para atualizar o rótulo e a cor do cartão ativo
+  swiperMulti.on('activeIndexChange', function (e) {
+    const cardLabel = e.slides[e.activeIndex].getAttribute('CardLabel');
+    const cardColor = e.slides[e.activeIndex].getAttribute('CardColor');
+    const activeCardLabel = document.querySelector('.active-card-label');
+    if (activeCardLabel) {
+      activeCardLabel.textContent = cardLabel;
+      activeCardLabel.style.color = cardColor;
+    }
+  });
+>>>>>>> parent of 8a7d88c (swiper optimize):src/home-page/videoTransitionAnimation.ts
   const tl = gsap.timeline({
     paused: true,
     defaults: { ease: 'power1.inOut', duration: 1.8 },
