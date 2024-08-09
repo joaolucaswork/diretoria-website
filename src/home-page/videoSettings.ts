@@ -5,10 +5,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import '@vime/core/themes/default.css';
-import '@vime/core/themes/light.css';
-
-import { defineCustomElements, VmFile, VmPlayer, VmVideo } from '@vime/core';
 import Swiper from 'swiper';
 
 export function videoSettings() {
