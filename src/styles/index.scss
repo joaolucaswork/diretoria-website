@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 //@import 'plyr/src/scss/plyr.scss';
 //@import 'locomotive-scroll/locomotive-scroll.css';
 //@import 'mouse-follower/dist/mouse-follower.min.css';
+=======
+@import 'plyr/dist/plyr.css';
+@import 'locomotive-scroll/locomotive-scroll.css';
+@import 'mouse-follower/dist/mouse-follower.min.css';
+
+>>>>>>> parent of 94d9152 (Clean things)
 
 .plyr__controls {
   z-index: 9999999 !important; /* Defina o valor de z-index conforme necessário */
