@@ -1,30 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
+//mport 'plyr/dist/plyr.css';
 import './styles/index.scss';
 
-//Smooth Scroll Plugin
-import LocomotiveScroll from 'locomotive-scroll';
+// import Swiper and modules styles
+import { gsap } from 'gsap';
+import { CustomEase } from 'gsap/CustomEase';
+import { Flip } from 'gsap/Flip';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import { cursoModules } from '$utils/curso-modules';
-//TS Files
-import { pageEffects } from '$utils/page-effects';
-import { videoManager } from '$utils/video-manager';
+import { initializeformCode } from './formCode';
+import { initializeMarqueeAnimation } from './iconsRotacao';
+import { initializedragEffect } from './priceAnimation';
 
-// Locomotive Scroll Instance
-const locomotiveScroll = new LocomotiveScroll({
-  lenisOptions: {
-    lerp: 0.1,
-    duration: 0.7,
-    wheelMultiplier: 1.5,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-  },
-});
+gsap.registerPlugin(Flip, ScrollTrigger, CustomEase);
 
-// Add event listener to the div to play the video
-
-//TS Files
-pageEffects();
-videoManager();
-cursoModules();
+initializeformCode();
+initializeMarqueeAnimation();
+initializedragEffect();
