@@ -15,8 +15,8 @@ import { Navigation } from 'swiper/modules';
 export function videoSettings() {
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     modules: [Navigation],
-    slidesPerView: 4,
-    spaceBetween: 32,
+    slidesPerView: 'auto',
+    autoHeight: true,
     followFinger: true,
     freeMode: false,
     lazy: true,
@@ -27,9 +27,9 @@ export function videoSettings() {
     },
 
     breakpoints: {
-      640: { slidesPerView: 1, spaceBetween: 20 },
-      1024: { slidesPerView: 2, spaceBetween: 56 },
-      1440: { slidesPerView: 3, spaceBetween: 32 },
+      640: { slidesPerView: 1, spaceBetween: 0 },
+      1024: { slidesPerView: 1, spaceBetween: 56 },
+      1440: { slidesPerView: 1, spaceBetween: 32 },
     },
   });
 }
