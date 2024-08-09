@@ -1,6 +1,10 @@
 {
   "name": "@joaolucas_work/diretoria-web",
+<<<<<<< HEAD
   "version": "1.2.0",
+=======
+  "version": "1.2.7",
+>>>>>>> parent of 94d9152 (Clean things)
   "description": "repository for the Diretoria Mediahouse website",
   "homepage": "https://github.com/joaolucaswork/diretoria-website",
   "license": "ISC",
@@ -68,7 +72,6 @@
     "plyr": "^3.7.8",
     "split-type": "^0.3.4",
     "sticksy": "^0.2.0",
-    "swiper": "^11.1.9",
     "typed.js": "^2.1.0"
   },
   "engines": {
