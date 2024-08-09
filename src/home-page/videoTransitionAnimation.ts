@@ -3,10 +3,7 @@
 // @ts-nocheck
 
 import { gsap } from 'gsap';
-<<<<<<< HEAD:src/videoTransitionAnimation.ts
-=======
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
->>>>>>> parent of 94d9152 (Clean things):src/home-page/videoTransitionAnimation.ts
 
 import { getPlayer } from './videoPlayer';
 
