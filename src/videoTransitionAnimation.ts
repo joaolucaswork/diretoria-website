@@ -10,8 +10,6 @@ export function initializeVideoTransitionAnimation() {
   let videoStartedOnce = false;
   let animationActive = false;
 
-<<<<<<< HEAD:src/videoTransitionAnimation.ts
-=======
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     modules: [Navigation],
     slidesPerView: 'auto',
@@ -42,7 +40,6 @@ export function initializeVideoTransitionAnimation() {
       activeCardLabel.style.color = cardColor;
     }
   });
->>>>>>> parent of 8a7d88c (swiper optimize):src/home-page/videoTransitionAnimation.ts
   const tl = gsap.timeline({
     paused: true,
     defaults: { ease: 'power1.inOut', duration: 1.8 },
