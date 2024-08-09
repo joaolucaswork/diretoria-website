@@ -1,14 +1,10 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-return-assign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import gsap from 'gsap';
 
-export function initializedragEffect() {
-  // Verifica se a largura da tela é maior que 1024px
-  if (window.innerWidth > 1024) {
+export function initializeformCode() {
+  $(document).ready(function () {
     // Import GSAP (make sure you've included it in your project)
     // Note: Flip plugin is no longer needed
 
@@ -115,13 +111,37 @@ export function initializedragEffect() {
     // New function to handle mouseover events on CMS items
     cmsItem.on('mouseenter', function () {
       const index = $(this).index();
-      const position = index / (cmsItemLength - 1);
-      dragdealer.setValue(position);
+      let position = index / (cmsItemLength - 1);
+
+      // Ensure position is within bounds
+      position = Math.max(0, Math.min(1, position));
+
+      try {
+        dragdealer.setValue(position);
+      } catch (error) {
+        console.error('Dragdealer setValue error:', error);
+      }
     });
 
     // New function to handle mouseout events on CMS items
     cmsItem.on('mouseleave', function () {
       // Do nothing here, as per the requirement to keep the slider at its current position
     });
-  }
+  });
+
+  // Campos UTM
+  window.onload = () =>
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(
+      (field) =>
+        (document.getElementById(field).value =
+          new URLSearchParams(location.search).get(field.toLowerCase()) || '')
+    );
+
+  // Mascara telefone
+  document.querySelector('[data-js="input"]').oninput = (e) =>
+    (e.target.value = e.target.value
+      .replace(/\D/g, '')
+      .replace(/^(\d{2})(\d)/, '($1) $2')
+      .replace(/(\d{5})(\d)/, '$1-$2')
+      .replace(/(-\d{4})\d+?$/, '$1'));
 }

@@ -2,15 +2,14 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import Plyr from 'plyr';
+//import Plyr from 'plyr';
 
 let player;
 
 export function initializeVideoPlayer() {
-  player = new Plyr('.swiper-container .swiper-slide > .video_bg-plyr', {
-    clickToPlay: true,
+  player = new Plyr('.video_bg-plyr', {
     controls: ['volume', 'fullscreen', 'play-large', 'play'],
-    loop: { active: true },
+    loop: { active: false },
   });
 
   return player;
