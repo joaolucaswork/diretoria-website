@@ -1,6 +1,5 @@
 import * as esbuild from 'esbuild';
 import { readdirSync } from 'fs';
-import { readdirSync } from 'fs';
 import { join, sep } from 'path';
 import * as sass from 'sass';
 
@@ -9,7 +8,7 @@ const BUILD_DIRECTORY = 'dist';
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
 // Config entrypoint files
-const ENTRY_POINTS = ['src/home-page/index.ts'];
+const ENTRY_POINTS = ['src/index.ts'];
 
 // Config dev serving
 const LIVE_RELOAD = !PRODUCTION;

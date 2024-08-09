@@ -5,13 +5,17 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
+// import Swiper and modules styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
 
 export function videoSettings() {
-  defineCustomElements();
-
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
-    slidesPerView: 'auto',
+    modules: [Navigation],
+    slidesPerView: 4,
     spaceBetween: 32,
     followFinger: true,
     freeMode: false,
@@ -21,6 +25,7 @@ export function videoSettings() {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
+
     breakpoints: {
       640: { slidesPerView: 1, spaceBetween: 20 },
       1024: { slidesPerView: 2, spaceBetween: 56 },

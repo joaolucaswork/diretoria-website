@@ -4,7 +4,6 @@
 
 import gsap from 'gsap';
 import LocomotiveScroll from 'locomotive-scroll';
-import MouseFollower from 'mouse-follower';
 import SplitType from 'split-type';
 
 export function initializeglobalCode() {

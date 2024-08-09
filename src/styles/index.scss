@@ -1,11 +1,7 @@
-@import 'plyr/dist/plyr.css';
 @import 'locomotive-scroll/locomotive-scroll.css';
 @import 'mouse-follower/dist/mouse-follower.min.css';
 
 
-.plyr__controls {
-  z-index: 9999999 !important; /* Defina o valor de z-index conforme necessário */
-}
 
 .plyr__poster {
   background-size: cover !important;
@@ -38,3 +34,23 @@ body.scrollflip-relative [tr-scrollflip-sticky='true'] {
   outline: 0;
 }
 
+.swiper-button-prev, .swiper-button-next {
+  background-color: #fff !important;
+  color: #000000 !important; 
+  border-radius: 100vw;
+  padding: 8px 16px !important;
+  inset: 20% 3% 0% auto;
+  top: 30svh !important;
+  box-shadow: 0 2px 14px 11px #0003;
+  width: 2.8em !important;
+  height: 2.8em !important;
+}
+
+.swiper-button-prev:after, .swiper-button-next:after {
+font-family: swiper-icons;
+font-size: 1em !important;
+}
+
+.swiper-button-disabled {
+opacity: 0 !important;
+}
