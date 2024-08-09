@@ -3,7 +3,6 @@
 @import 'mouse-follower/dist/mouse-follower.min.css';
 
 
-
 .plyr__controls {
   z-index: 9999999 !important; /* Defina o valor de z-index conforme necessário */
 }
@@ -38,45 +37,4 @@ body.scrollflip-relative [tr-scrollflip-sticky='true'] {
   border-color: #000000;
   outline: 0;
 }
-
-html {--plyr-color-main: white;}
-.plyr__play-large {
-  background-color: white; color: black !important; }
-.plyr__controls button:hover svg {fill: white; }
-.plyr__controls button:hover {background-color: #ffffff40;}
-.plyr--video .plyr__control:focus-visible, .plyr--video .plyr__control:hover, .plyr--video .plyr__control[aria-expanded=true] {
-    background: #ffffff3d !important;
-    color: #fff !important;
-}
-.plyr--full-ui.plyr--video .plyr__control--overlaid {
-    display: block; 
-    -webkit-backdrop-filter: blur(45px);
-    backdrop-filter: blur(45px) ; 
-    background-color: #ffffff50; 
-    color: #ffffff8a;
-        scale: 1;
-    }
-
-
-    .swiper-button-prev, .swiper-button-next {
-      background-color: #fff !important;
-      color: #000000 !important; 
-      border-radius: 100vw;
-      padding: 8px 16px !important;
-      inset: 20% 3% 0% auto;
-      top: 30svh !important;
-      box-shadow: 0 2px 14px 11px #0003;
-      width: 2.8em !important;
-      height: 2.8em !important;
-  }
-
-  .swiper-button-prev:after, .swiper-button-next:after {
-    font-family: swiper-icons;
-    font-size: 1em !important;
-  }
-
-  .swiper-button-disabled {
-    opacity: 0 !important;
-  }
-
 

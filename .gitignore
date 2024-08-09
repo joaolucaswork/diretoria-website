@@ -26,3 +26,6 @@ typings/
 
 # Production files
 dist
+
+#
+old_backup
