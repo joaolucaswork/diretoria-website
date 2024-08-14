@@ -24,10 +24,6 @@ body.scrollflip-relative [tr-scrollflip-sticky='true'] {
   opacity: 1;
 }
 
-.mf-cursor:before {
-  background: black;
-  transform: scale(0.4);
-}
 
 .w-input:focus, .w-select:focus {
   border-color: #000000;

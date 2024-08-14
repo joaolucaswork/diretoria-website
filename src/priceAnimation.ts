@@ -49,15 +49,23 @@ export function initializedragEffect() {
       return current + (target - current) * factor;
     }
 
+    function formatValue(value) {
+      const fixedValue = value.toFixed(1);
+      if (fixedValue.endsWith('.0')) {
+        return '+' + fixedValue.slice(0, -2);
+      }
+      return fixedValue;
+    }
+
     function animate() {
       lastValue = smoothInterpolation(targetValue, lastValue);
-      $('.handle_count').text(lastValue.toFixed(1));
+      $('.handle_count').text(formatValue(lastValue));
 
       if (Math.abs(targetValue - lastValue) > 0.1) {
         animationFrameId = requestAnimationFrame(animate);
       } else {
         lastValue = targetValue;
-        $('.handle_count').text(targetValue.toFixed(1));
+        $('.handle_count').text(formatValue(targetValue));
         animationFrameId = null;
       }
     }
@@ -98,7 +106,7 @@ export function initializedragEffect() {
             const fixedValue = parseFloat($(this).find('.position_salary').text());
             targetValue = fixedValue;
             lastValue = fixedValue;
-            $('.handle_count').text(fixedValue.toFixed(1));
+            $('.handle_count').text(formatValue(fixedValue));
           }
         });
       },
