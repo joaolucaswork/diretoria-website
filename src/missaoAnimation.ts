@@ -74,7 +74,7 @@ export function initializeScrollEffect() {
 
       const tl = gsap.timeline({
         paused: true,
-        defaults: { ease: 'expo.inOut', duration: 1 },
+        defaults: { ease: 'expo.inOut', duration: 0.7 },
       });
 
       items.each((index, item) => {
