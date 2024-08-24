@@ -13,7 +13,11 @@ import { Navigation } from 'swiper/modules';
 import { VidstackPlayer } from 'vidstack/global/player';
 
 export function videoSettings() {
-  VidstackPlayer.create();
+  const player = VidstackPlayer.create({
+    title: '...',
+    src: '...',
+    poster: '...',
+  });
 
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     modules: [Navigation],
