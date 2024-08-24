@@ -10,14 +10,11 @@ import 'swiper/css';
 
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+import { defineCustomElement, MediaPlayButtonElement } from 'vidstack/elements';
 import { VidstackPlayer } from 'vidstack/global/player';
 
 export function videoSettings() {
-  const player = VidstackPlayer.create({
-    title: '...',
-    src: '...',
-    poster: '...',
-  });
+  defineCustomElement(MediaPlayButtonElement);
 
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     modules: [Navigation],
@@ -82,7 +79,7 @@ export function videoSettings() {
   }
 
   function updateUI(isPlaying) {
-    document.body.style.overflow = isPlaying ? 'default' : '';
+    document.body.style.overflow = isPlaying ? 'hidden' : '';
     document.body.setAttribute('element-theme', isPlaying ? '1' : '2');
     if (!isMobile) {
       videoVisual.classList.toggle('full', isPlaying);
