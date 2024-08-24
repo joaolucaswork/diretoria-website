@@ -7,29 +7,60 @@
 
 // import Swiper and modules styles
 import 'swiper/css';
-import 'swiper/css/navigation';
 
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+import { VidstackPlayer } from 'vidstack/global/player';
 
 export function videoSettings() {
+  const player = VidstackPlayer.create({
+    target: '#target',
+    title: '...',
+    src: '...',
+    poster: '...',
+  });
+
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     modules: [Navigation],
-    slidesPerView: 'auto',
+    slidesPerView: 3,
+    slidesPerGroup: 1,
+    grabCursor: false,
+    a11y: false,
     autoHeight: false,
+    allowTouchMove: true,
     followFinger: true,
     freeMode: false,
-    lazy: false,
+    lazy: true,
     keyboard: { enabled: true, onlyInViewport: true },
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      nextEl: '#right-button',
+      prevEl: '#left-button',
     },
 
     breakpoints: {
-      640: { slidesPerView: 1, spaceBetween: 0, allowTouchMove: true },
-      1024: { slidesPerView: 1, spaceBetween: 56, allowTouchMove: false },
-      1440: { slidesPerView: 3, spaceBetween: 32, allowTouchMove: false },
+      0: {
+        /* when window >=0px - webflow mobile landscape/portriat */ slidesPerView: 1,
+        slidesPerGroup: 1,
+        spaceBetween: 28,
+      },
+      480: {
+        /* when window >=0px - webflow mobile landscape/portriat */ slidesPerView: 1,
+        slidesPerGroup: 1,
+        spaceBetween: 28,
+        allowTouchMove: true,
+      },
+      767: {
+        /* when window >= 767px - webflow tablet */ slidesPerView: 3,
+        slidesPerGroup: 1,
+        allowTouchMove: true,
+        spaceBetween: 28,
+      },
+      992: {
+        /* when window >= 988px - webflow desktop */ slidesPerView: 3,
+        slidesPerGroup: 1,
+        allowTouchMove: false,
+        spaceBetween: 28,
+      },
     },
   });
   const video = document.querySelector('video');
@@ -52,7 +83,7 @@ export function videoSettings() {
   }
 
   function updateUI(isPlaying) {
-    document.body.style.overflow = isPlaying ? 'hidden' : '';
+    document.body.style.overflow = isPlaying ? 'default' : '';
     document.body.setAttribute('element-theme', isPlaying ? '1' : '2');
     if (!isMobile) {
       videoVisual.classList.toggle('full', isPlaying);

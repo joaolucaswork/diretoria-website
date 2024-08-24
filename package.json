@@ -1,6 +1,6 @@
 {
   "name": "@joaolucas_work/diretoria-web",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "repository for the Diretoria Mediahouse website",
   "homepage": "https://github.com/joaolucaswork/diretoria-website",
   "license": "ISC",
@@ -69,7 +69,8 @@
     "split-type": "^0.3.4",
     "sticksy": "^0.2.0",
     "swiper": "^11.1.9",
-    "typed.js": "^2.1.0"
+    "typed.js": "^2.1.0",
+    "vidstack": "^1.12.9"
   },
   "engines": {
     "pnpm": ">=9"
