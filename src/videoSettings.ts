@@ -10,10 +10,10 @@ import 'swiper/css';
 
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
-import { VidstackPlayer } from 'vidstack/global/player';
+import { defineCustomElement, MediaPlayerElement } from 'vidstack/elements';
 
 export function videoSettings() {
-  const player = VidstackPlayer.create({});
+  defineCustomElement(MediaPlayerElement);
 
   const swiperMulti = new Swiper('.swiper-container.is-portfolio', {
     modules: [Navigation],
